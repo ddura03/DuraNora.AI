@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DuraNoia — Home AI Showcase Section · 4 Ideas</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  :root{
+    --violet-deep:#7c3aed; --violet-soft:#b39ddb; --violet-dark:#4c1d95;
+    --paper:#f6f3fb; --paper-2:#ece6f7; --ink:#1a1325; --ink-2:#5a4e75; --muted:#9087a8; --line:#d9cff0; --ok:#1f8a5b;
+    --mono:"JetBrains Mono", monospace; --sans:"Space Grotesk", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#e8e3ef;color:var(--ink);font-family:var(--sans)}
+  .page{max-width:1320px;margin:0 auto;padding:22px 24px 80px}
+  .top .kick{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet-deep);font-weight:600;margin-bottom:6px}
+  .top h1{font-size:27px;font-weight:800;letter-spacing:-.02em;margin:0}
+  .top .lede{color:var(--ink-2);max-width:74ch;line-height:1.45;margin-top:6px;font-size:14px}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 16px;align-items:center}
+  .tab{appearance:none;border:1.5px solid var(--violet-dark);background:#fff;padding:8px 14px 9px;border-radius:999px;cursor:pointer;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.04em;color:var(--ink);transition:transform .08s ease, background-color .15s ease, color .15s ease}
+  .tab:hover{background:var(--paper-2)}
+  .tab.is-active{background:var(--violet-deep);border-color:var(--violet-deep);color:#fff}
+  .tab .n{opacity:.6;margin-right:8px;font-weight:400}
+
+  /* page frame — mimics the home page surface */
+  .frame{background:var(--paper);border:1.5px solid var(--violet-dark);border-radius:14px;overflow:hidden;box-shadow:6px 6px 0 var(--violet-dark)}
+  .ctx{padding:14px max(34px,5vw);font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em;border-bottom:1px dashed var(--line);background:#fff;text-align:center}
+  .sec{padding:60px max(34px,5vw)}
+
+  /* shared bits */
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet-deep);font-weight:700}
+  .h2{font-size:34px;font-weight:800;letter-spacing:-.025em;line-height:1.05;margin:10px 0 0;color:var(--ink)}
+  .h2 .i{font-style:italic;color:var(--violet-deep)}
+  .sub{font-size:15.5px;color:var(--ink-2);line-height:1.55;margin-top:12px;max-width:56ch}
+  .btn{border:0;border-radius:11px;cursor:pointer;background:linear-gradient(180deg,#8b4bf0,var(--violet-deep));color:#fff;font-family:var(--sans);font-size:14px;font-weight:700;padding:13px 22px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 20px rgba(124,58,237,.28);transition:transform .12s ease,box-shadow .18s ease;text-decoration:none}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(124,58,237,.4)}
+  .btn .ar{transition:transform .18s ease}
+  .btn:hover .ar{transform:translateX(4px)}
+  .btn.ghost{background:#fff;color:var(--violet-deep);border:1.5px solid var(--line);box-shadow:none}
+  .btn.ghost:hover{border-color:var(--violet-deep);background:var(--paper-2)}
+  .glyph{border:1.5px solid var(--violet-deep);border-radius:7px;display:grid;place-items:center;background:var(--paper-2);font-family:var(--mono);font-weight:800;color:var(--violet-dark);overflow:hidden}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 6px;font-size:12px;font-weight:700;color:var(--ink)}
+  .views{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.92);border-radius:999px;padding:5px 11px;font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--ink)}
+  .feat{background:var(--violet-deep);color:#fff;border-radius:999px;padding:5px 11px;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+
+  /* project card */
+  .pcard{background:#fff;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;display:block;text-decoration:none;color:inherit}
+  .pcard:hover{transform:translateY(-5px);border-color:var(--violet-deep);box-shadow:0 18px 40px rgba(124,58,237,.18)}
+  .pcard .cover{position:relative;height:158px;display:grid;place-items:center;overflow:hidden}
+  .pcard .cover .mono{font-family:var(--mono);font-weight:800;font-size:38px;color:rgba(255,255,255,.92);text-shadow:0 2px 20px rgba(0,0,0,.25)}
+  .pcard .badges{position:absolute;top:11px;left:11px;right:11px;display:flex;align-items:center;gap:8px}
+  .pcard .pb{padding:14px 15px 15px}
+  .pcard .pt{font-size:15px;font-weight:800;letter-spacing:-.01em;line-height:1.25}
+  .pcard .pby{display:flex;align-items:center;gap:8px;margin-top:9px;font-size:12px;color:var(--ink-2);font-weight:600}
+  .pcard .av{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:9px;flex:0 0 22px}
+  .pcard .pm{display:flex;align-items:center;gap:14px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-2);font-weight:600}
+  .pcard .pm .x{display:inline-flex;align-items:center;gap:6px}
+  .pcard .pm .x svg{color:var(--muted)}
+  .pcard .pm .mk{margin-left:auto}
+
+  .heart{display:inline-flex;align-items:center;gap:6px}
+  .mini-av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:10px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="learn-ai-data.jsx"></script>
+<script type="text/babel" src="showcase-data.jsx"></script>
+<script type="text/babel" src="home-showcase-ideas.jsx"></script>
+</body>
+</html>

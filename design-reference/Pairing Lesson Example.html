@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DuraNoia — Pairing Lesson Example</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  :root{
+    --violet-deep:#7c3aed; --violet-soft:#b39ddb; --violet-dark:#4c1d95;
+    --paper:#f6f3fb; --paper-2:#ece6f7; --ink:#1a1325; --ink-2:#5a4e75; --muted:#9087a8; --line:#d9cff0; --ok:#1f8a5b;
+    --hand:"Caveat",cursive; --mono:"JetBrains Mono",monospace; --sans:"Space Grotesk",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#f6f3fb;font-family:var(--sans);color:var(--ink)}
+  .navstrip{display:flex;align-items:center;justify-content:space-between;padding:18px max(60px,6vw);border-bottom:1.5px solid var(--line);background:var(--paper);font-family:var(--mono);font-size:13.5px}
+  .navstrip .links{display:flex;gap:38px;color:var(--ink);font-weight:600;font-family:var(--sans)}
+  .nav-link{cursor:pointer}
+  .pill{font-family:var(--mono);font-size:13.5px;border:1.5px solid var(--line);border-radius:999px;padding:7px 15px;background:#fff;color:var(--ink-2);cursor:pointer}
+  .label{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+  .glyph{border:1.5px solid var(--violet-deep);border-radius:9px;display:grid;place-items:center;background:var(--paper-2);overflow:hidden}
+  .glyph img{width:70%;height:70%;object-fit:contain;display:block}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const LOGO_SRC = { "@chatgpt":"logos/chatgpt.png","@claude":"logos/claude.svg","@gemini":"logos/gemini.webp","@perplexity":"logos/perplexity.png","@cursor":"logos/cursor.png","@midjourney":"logos/midjourney.png" };
+const Mark = ({mark, size=24}) => <span className="glyph" style={{width:size,height:size,borderRadius:Math.round(size*0.22)}}>{LOGO_SRC[mark] ? <img src={LOGO_SRC[mark]} alt=""/> : <span style={{fontFamily:"var(--mono)",fontWeight:800,color:"var(--violet-dark)"}}>{mark}</span>}</span>;
+
+// Example pairing: Claude + Perplexity
+const PAIR = {
+  a:{name:"Perplexity", mark:"@perplexity"},
+  b:{name:"Claude", mark:"@claude"},
+  title:"Research → synthesis: Perplexity + Claude",
+  sub:"Turn a vague question into a cited, well-written brief by chaining live web research with careful synthesis.",
+  dur:"7:24", level:"Workflow",
+  steps:[
+    { who:"Perplexity", mark:"@perplexity", t:"Gather cited facts", d:"Ask your question in Perplexity. Use Focus → Academic when sources matter. Collect the answer with its citations." },
+    { who:"Claude", mark:"@claude", t:"Synthesize the draft", d:"Paste the cited findings into Claude. Ask it to structure, reason across the sources, and write the brief in your voice." },
+  ],
+  lessons:[
+    { n:"01", t:"Why chain these two", who:"both", dur:"1:40", done:true },
+    { n:"02", t:"Gathering cited facts in Perplexity", who:"@perplexity", dur:"2:10", done:true },
+    { n:"03", t:"Handing off to Claude cleanly", who:"@claude", dur:"2:05", active:true },
+    { n:"04", t:"Synthesizing a sourced brief", who:"@claude", dur:"1:29" },
+  ],
+  prompt:"(In Claude, paste your Perplexity findings)\n\"Here are cited findings on {topic}.\nWrite a 1-page brief: structure it, weigh the\nsources, and flag anything that needs verifying.\nKeep my plain, direct voice.\"",
+  note:"Perplexity finds & cites.\nClaude reasons & writes.\nDon't make one do both.",
+};
+
+function PairingLesson(){
+  const [active,setActive] = React.useState(2);
+  const L = PAIR.lessons[active];
+  return (
+    <div>
+      {/* nav */}
+      <div className="navstrip">
+        <div style={{display:"flex",alignItems:"center",gap:12,cursor:"pointer"}} onClick={()=>{window.location.href="DuraNoia Wireframes.html";}}>
+          <img src="duranoia-icon.svg" width="30" height="30" alt=""/>
+          <div style={{fontFamily:"var(--sans)",fontSize:18,fontWeight:800}}><span>Dura</span><span style={{color:"var(--violet-deep)"}}>Noia</span></div>
+          <span style={{fontFamily:"var(--mono)",fontSize:10,color:"var(--violet-dark)",letterSpacing:".18em",marginLeft:8,fontWeight:600}}>AI EDUCATION PLATFORM</span>
+        </div>
+        <div className="links">
+          <span className="nav-link" onClick={()=>{window.location.href="Learn AI Page Wireframes.html";}}>Learn AI</span>
+          <span className="nav-link" onClick={()=>{window.location.href="AI Ecosystem Page Wireframes.html";}}>AI Ecosystem</span>
+          <span className="nav-link" onClick={()=>{window.location.href="AI Showcase Page Wireframes.html";}}>AI Showcase</span>
+          <span className="nav-link" onClick={()=>{window.location.href="News Page Wireframes.html";}}>News</span>
+          <span className="nav-link" onClick={()=>{window.location.href="About Page Wireframes.html";}}>About</span>
+        </div>
+        <div style={{display:"flex",gap:8}}>
+          <span className="pill">Sign in</span>
+          <span className="pill" style={{background:"var(--violet-deep)",borderColor:"var(--violet-deep)",color:"#fff",fontWeight:600}}>Get started →</span>
+        </div>
+      </div>
+
+      {/* header */}
+      <div style={{padding:"26px max(40px,4vw) 0"}}>
+        <div style={{fontFamily:"var(--mono)",fontSize:12.5,color:"var(--muted)",marginBottom:18}}>
+          <span style={{cursor:"pointer"}} onClick={()=>{window.location.href="AI Ecosystem Page Wireframes.html";}}>AI Ecosystem</span>
+          {" / "}<span style={{cursor:"pointer"}} onClick={()=>{window.location.href="Model Pairing Page Wireframes.html?model=claude";}}>Claude</span>
+          {" / "}<b style={{color:"var(--ink)"}}>+ Perplexity</b>
+        </div>
+        <div style={{display:"flex",alignItems:"center",gap:14}}>
+          <div style={{display:"flex",alignItems:"center",gap:6}}>
+            <Mark mark={PAIR.a.mark} size={48}/>
+            <span style={{color:"var(--violet-deep)",fontFamily:"var(--mono)",fontWeight:700,fontSize:20}}>+</span>
+            <Mark mark={PAIR.b.mark} size={48}/>
+          </div>
+          <div>
+            <div style={{fontSize:26,fontWeight:800,letterSpacing:"-.02em",lineHeight:1.05}}>{PAIR.title}</div>
+            <div className="label" style={{marginTop:5}}>{PAIR.level} · {PAIR.lessons.length} lessons · {PAIR.dur}</div>
+          </div>
+        </div>
+        <div style={{fontSize:15.5,color:"var(--ink-2)",lineHeight:1.55,margin:"14px 0 0",maxWidth:"72ch"}}>{PAIR.sub}</div>
+      </div>
+
+      {/* workspace: lessons | video | try-it */}
+      <div style={{display:"grid",gridTemplateColumns:"280px 1fr 320px",gap:0,marginTop:24,borderTop:"1.5px solid var(--line)"}}>
+        {/* left lesson list */}
+        <div style={{borderRight:"1.5px solid var(--line)",padding:"18px 16px",background:"#fff"}}>
+          <div className="label" style={{marginBottom:12}}>// Lessons &nbsp; {PAIR.lessons.filter(x=>x.done).length} / {PAIR.lessons.length}</div>
+          {PAIR.lessons.map((ls,i)=>(
+            <div key={i} onClick={()=>setActive(i)} style={{display:"flex",gap:11,alignItems:"flex-start",padding:"11px 10px",borderRadius:9,cursor:"pointer",background:i===active?"var(--paper-2)":"transparent",borderLeft:i===active?"3px solid var(--violet-deep)":"3px solid transparent",marginBottom:2}}>
+              <div style={{width:20,height:20,borderRadius:"50%",flex:"0 0 20px",marginTop:1,border:`1.5px solid ${ls.done?"var(--ok)":"var(--line)"}`,background:ls.done?"var(--ok)":"#fff",display:"grid",placeItems:"center"}}>
+                {ls.done && <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>}
+              </div>
+              <div>
+                <div style={{fontWeight:700,fontSize:13.5,lineHeight:1.25}}>{ls.n}. {ls.t}</div>
+                <div className="label" style={{marginTop:3,display:"flex",alignItems:"center",gap:6}}>
+                  {ls.who!=="both" && <Mark mark={ls.who} size={15}/>}
+                  {ls.who==="both" && <span style={{fontSize:9}}>BOTH</span>}
+                  · {ls.dur}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* center video */}
+        <div style={{padding:"22px max(24px,2vw)"}}>
+          <div className="label" style={{marginBottom:12}}>// Lesson {L.n} · {L.t}</div>
+          <div style={{position:"relative",borderRadius:12,overflow:"hidden",height:380,background:"repeating-linear-gradient(135deg,#ddd0f0 0 16px,#cbb9ec 16px 32px)",display:"grid",placeItems:"center"}}>
+            <div style={{position:"absolute",top:12,left:12,fontFamily:"var(--mono)",fontSize:11,letterSpacing:".06em",background:"#1a1325",color:"#fff",padding:"4px 9px",borderRadius:4}}>▶ NOW PLAYING · 0:00 / {L.dur}</div>
+            <div style={{width:74,height:74,borderRadius:"50%",background:"rgba(255,255,255,.92)",display:"grid",placeItems:"center",boxShadow:"0 12px 30px rgba(76,29,149,.3)"}}>
+              <div style={{width:0,height:0,borderStyle:"solid",borderWidth:"13px 0 13px 21px",borderColor:"transparent transparent transparent #7c3aed",marginLeft:5}}/>
+            </div>
+          </div>
+
+          {/* the workflow */}
+          <div className="label" style={{margin:"24px 0 12px",color:"var(--violet-deep)"}}>The workflow</div>
+          <div style={{display:"flex",alignItems:"stretch",gap:8}}>
+            {PAIR.steps.map((s,i)=>(
+              <React.Fragment key={i}>
+                <div style={{flex:1,border:"1.5px solid var(--line)",borderRadius:11,padding:"14px 16px",background:"#fff"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:9,marginBottom:7}}>
+                    <Mark mark={s.mark} size={26}/>
+                    <span style={{fontWeight:800,fontSize:14}}>{s.who}</span>
+                    <span className="label" style={{marginLeft:"auto"}}>Step {i+1}</span>
+                  </div>
+                  <div style={{fontWeight:700,fontSize:13.5,marginBottom:4}}>{s.t}</div>
+                  <div style={{fontSize:12.5,color:"var(--ink-2)",lineHeight:1.5}}>{s.d}</div>
+                </div>
+                {i<PAIR.steps.length-1 && <div style={{display:"grid",placeItems:"center",color:"var(--violet-deep)",fontWeight:700,fontSize:18}}>→</div>}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+
+        {/* right try-it */}
+        <div style={{borderLeft:"1.5px solid var(--line)",padding:"22px 20px",background:"#fff"}}>
+          <div className="label" style={{marginBottom:14}}>// Try it yourself</div>
+          <div className="label" style={{marginBottom:8}}>The hand-off prompt</div>
+          <pre style={{whiteSpace:"pre-wrap",fontFamily:"var(--mono)",fontSize:12,lineHeight:1.6,background:"var(--paper)",border:"1.5px solid var(--line)",borderRadius:10,padding:14,color:"var(--ink)",margin:0}}>{PAIR.prompt}</pre>
+          <div style={{display:"flex",gap:8,marginTop:12}}>
+            <button className="pill" style={{flex:1,textAlign:"center",background:"var(--violet-deep)",borderColor:"var(--violet-deep)",color:"#fff",fontWeight:700,border:0}}>Open Perplexity →</button>
+            <button className="pill" style={{flex:1,textAlign:"center",background:"#fff",color:"var(--violet-deep)",fontWeight:700}}>Open Claude →</button>
+          </div>
+          <div className="label" style={{margin:"22px 0 8px"}}>Lesson note</div>
+          <div style={{fontFamily:"var(--hand)",fontSize:17,color:"var(--violet-deep)",lineHeight:1.35,whiteSpace:"pre-line"}}>{PAIR.note}</div>
+          <button style={{width:"100%",marginTop:22,border:0,borderRadius:11,padding:"13px",background:"linear-gradient(180deg,#8b4bf0,var(--violet-deep))",color:"#fff",fontWeight:700,fontSize:14,cursor:"pointer",boxShadow:"0 8px 20px rgba(124,58,237,.28)"}}>✓ Mark complete & next →</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<PairingLesson/>);
+</script>
+</body>
+</html>

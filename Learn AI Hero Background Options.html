@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DuraNoia — Hero Background Options</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#7c3aed; --soft:#b39ddb; --dark:#4c1d95;
+    --paper:#f6f3fb; --hero:#ece6f7; --ink:#1a1325; --ink2:#5a4e75; --line:#d9cff0;
+    --mono:"JetBrains Mono",monospace; --sans:"Space Grotesk",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#e8e3ef;font-family:var(--sans);color:var(--ink)}
+  .wrap{max-width:1320px;margin:0 auto;padding:20px}
+  .head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+  .head h1{margin:0;font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .head p{margin:4px 0 0;color:var(--ink2);font-size:14px;max-width:60ch;line-height:1.4}
+  .switch{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .switch button{
+    font-family:var(--mono);font-size:12px;letter-spacing:.04em;cursor:pointer;
+    padding:9px 16px;border-radius:999px;border:1.5px solid var(--dark);background:#fff;color:var(--ink);
+    transition:all .15s ease;
+  }
+  .switch button:hover{background:var(--hero)}
+  .switch button.on{background:var(--deep);border-color:var(--deep);color:#fff;font-weight:700}
+  .switch button .n{opacity:.55;margin-right:7px}
+  .switch button.on .n{opacity:.85}
+
+  /* Hero frame — mirrors the real Learn AI hero */
+  .hero{
+    position:relative;height:300px;border-radius:14px;overflow:hidden;
+    border:1.5px solid var(--line);background:var(--hero);
+  }
+  .hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+  .hero .stripes{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .hero .content{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:0 max(40px,4vw)}
+  .hero h2{margin:0 0 10px;font-size:40px;font-weight:800;letter-spacing:-.025em;line-height:.98;color:var(--dark)}
+  .hero h2 em{font-style:italic;color:var(--deep)}
+  .hero .sub{font-size:15px;color:var(--ink);max-width:54ch;line-height:1.45}
+
+  .nav{display:flex;align-items:center;gap:12px;position:absolute;top:16px;left:max(40px,4vw);z-index:2}
+  .nav .mark{width:30px;height:30px;border:1.5px solid var(--deep);border-radius:8px;display:grid;place-items:center;font-family:var(--mono);font-weight:800;color:var(--dark);background:rgba(255,255,255,.6)}
+  .nav .wm{font-size:18px;font-weight:800;letter-spacing:-.01em}
+
+  .desc{margin-top:14px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:16px 18px}
+  .desc .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);font-weight:700}
+  .desc h3{margin:6px 0 6px;font-size:18px;letter-spacing:-.01em}
+  .desc p{margin:0;color:var(--ink2);font-size:13.5px;line-height:1.5;max-width:80ch}
+  .desc .vibe{margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--ink2)}
+  .desc .vibe b{color:var(--deep)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div>
+      <h1>Hero background — six on-brand directions</h1>
+      <p>Each runs behind the real headline so you can judge readability. Flip through them, tell me the winner (or a hybrid) and I'll drop it into the Learn AI page.</p>
+    </div>
+  </div>
+
+  <div class="switch" id="switch">
+    <button data-mode="aurora" class="on"><span class="n">01</span>Aurora Mesh</button>
+    <button data-mode="orbital"><span class="n">02</span>Orbital Rings</button>
+    <button data-mode="flow"><span class="n">03</span>Silk Flow</button>
+    <button data-mode="contour"><span class="n">04</span>Contour Field</button>
+    <button data-mode="grid"><span class="n">05</span>Depth Grid</button>
+    <button data-mode="minimal"><span class="n">06</span>Quiet Gradient</button>
+  </div>
+
+  <div class="hero">
+    <div class="stripes" id="stripes"></div>
+    <canvas id="cv"></canvas>
+    <div class="nav">
+      <div class="mark">D</div>
+      <div class="wm"><span style="color:var(--ink)">Dura</span><span style="color:var(--deep)">Noia</span></div>
+    </div>
+    <div class="content">
+      <h2>Learn every AI <em>worth knowing.</em></h2>
+      <div class="sub">Pick a model to dive into hands-on video lessons, prompt libraries, and capability breakdowns. Updated as the field moves.</div>
+    </div>
+  </div>
+
+  <div class="desc" id="desc"></div>
+</div>
+
+<script>
+const C = { deep:"#7c3aed", soft:"#b39ddb", dark:"#4c1d95", paper:"#f6f3fb", hero:"#ece6f7" };
+
+const DESCRIPTIONS = {
+  aurora:  { name:"Aurora Mesh", label:"01 · soft + premium", text:"Large blurred violet light-blooms drift slowly across the panel like an aurora. Calm, modern, expensive-feeling. Zero literal 'AI' imagery — it just glows on-brand.", vibe:"calm · premium · abstract" },
+  orbital: { name:"Orbital Rings", label:"02 · logo echo", text:"Concentric ellipses with small planets orbiting — a direct echo of your DuraNoia logo, parked on the right away from the text. The most literally on-brand option.", vibe:"on-brand · elegant · structured" },
+  flow:    { name:"Silk Flow → Logo Reform", label:"03 · gather · burst · reform", text:"Silky violet particles stream in from the right, gather into the DuraNoia orbital logo, hold, burst outward, wander on a flow field, then reform — looping forever. Lives on the right, away from the headline.", vibe:"signature · on-brand · hypnotic" },
+  contour: { name:"Contour Field", label:"04 · topographic", text:"Nested contour lines breathe and morph like a topographic map or sound waves. Editorial and distinctive — feels like a 'field guide' map.", vibe:"editorial · distinctive · mapping" },
+  grid:    { name:"Depth Grid", label:"05 · perspective grid", text:"A subtle perspective grid recedes into the distance with a soft violet glow and a few drifting highlights. Techy and futuristic but understated.", vibe:"futuristic · techy · subtle" },
+  minimal: { name:"Quiet Gradient", label:"06 · let type lead", text:"Almost still: a refined diagonal gradient with one slow-breathing glow and a giant faint orbital glyph. Lets the headline be the star.", vibe:"minimal · confident · type-first" },
+};
+
+const cv = document.getElementById("cv");
+const ctx = cv.getContext("2d");
+const stripes = document.getElementById("stripes");
+let mode = "aurora", raf = null, W = 0, H = 0, DPR = 1, t0 = performance.now();
+let state = {};
+
+function size(){
+  DPR = Math.min(window.devicePixelRatio||1, 2);
+  const r = cv.getBoundingClientRect();
+  W = r.width; H = r.height;
+  cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+
+function setStripes(on){
+  stripes.style.background = on
+    ? `radial-gradient(circle at 82% 30%, rgba(179,157,219,.40) 0, transparent 55%),
+       repeating-linear-gradient(135deg, ${C.hero} 0 16px, #ddd0ee 16px 32px)`
+    : "";
+}
+
+// ---------- renderers ----------
+function init(m){
+  state = {};
+  if(m==="aurora"){
+    state.blobs = [
+      { x:.75, y:.35, r:.55, c:[124,58,237], a:.20, sx:.00007, sy:.00010, px:0, py:1 },
+      { x:.55, y:.65, r:.50, c:[179,157,219], a:.30, sx:.00009, sy:.00006, px:2, py:3 },
+      { x:.90, y:.75, r:.45, c:[76,29,149],  a:.14, sx:.00006, sy:.00011, px:4, py:1 },
+      { x:.40, y:.30, r:.40, c:[124,58,237], a:.12, sx:.00010, sy:.00008, px:1, py:5 },
+    ];
+  }
+  if(m==="orbital"){
+    state.rings = [
+      { rx:.30, ry:.11, rot:0,    sp:.00018, n:2, size:4 },
+      { rx:.22, ry:.22, rot:-.5,  sp:.00026, n:3, size:3.5 },
+      { rx:.40, ry:.30, rot:.4,   sp:.00012, n:1, size:5 },
+      { rx:.15, ry:.15, rot:1.1,  sp:.00034, n:2, size:3 },
+    ];
+  }
+  if(m==="flow"){
+    const cx = W*0.76, cy = H*0.5;
+    const S = Math.min(W,H)*0.40;
+    const targets = [];
+    const ringDefs = [
+      { rx:S,       ry:S*0.42, rot:0 },
+      { rx:S,       ry:S*0.42, rot:Math.PI/3 },
+      { rx:S,       ry:S*0.42, rot:-Math.PI/3 },
+      { rx:S*0.55,  ry:S*0.55, rot:0 },
+    ];
+    const perRing = 80;
+    for(const rd of ringDefs){
+      for(let i=0;i<perRing;i++){
+        const a = (i/perRing)*Math.PI*2;
+        const ex = Math.cos(a)*rd.rx, ey = Math.sin(a)*rd.ry;
+        const rx = ex*Math.cos(rd.rot) - ey*Math.sin(rd.rot);
+        const ry = ex*Math.sin(rd.rot) + ey*Math.cos(rd.rot);
+        targets.push({ x:cx+rx, y:cy+ry });
+      }
+    }
+    for(let i=0;i<46;i++){
+      const a=Math.random()*Math.PI*2, r=Math.random()*S*0.10;
+      targets.push({ x:cx+Math.cos(a)*r, y:cy+Math.sin(a)*r });
+    }
+    state.cx=cx; state.cy=cy;
+    state.ps = targets.map(tg=>{
+      const x = cx + (Math.random()-0.5)*W*0.6;
+      const y = cy + (Math.random()-0.5)*H*1.1;
+      return { x, y, px:x, py:y, vx:0, vy:0, tx:tg.x, ty:tg.y };
+    });
+    state.lastPhase = "";
+    ctx.clearRect(0,0,W,H);
+  }
+  if(m==="contour"){ state.phase = 0; }
+  if(m==="grid"){ state.off = 0; }
+  if(m==="minimal"){ state.blob = { x:.78, y:.5 }; }
+}
+
+function render(now){
+  const t = now - t0;
+  if(mode!=="flow") ctx.clearRect(0,0,W,H);
+
+  if(mode==="aurora"){
+    ctx.globalCompositeOperation = "source-over";
+    for(const b of state.blobs){
+      const cx = (b.x + Math.sin(t*b.sx + b.px)*0.07) * W;
+      const cy = (b.y + Math.cos(t*b.sy + b.py)*0.07) * H;
+      const rad = b.r * Math.min(W,H) * 1.3;
+      const g = ctx.createRadialGradient(cx,cy,0,cx,cy,rad);
+      g.addColorStop(0, `rgba(${b.c[0]},${b.c[1]},${b.c[2]},${b.a})`);
+      g.addColorStop(1, `rgba(${b.c[0]},${b.c[1]},${b.c[2]},0)`);
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(cx,cy,rad,0,Math.PI*2); ctx.fill();
+    }
+  }
+
+  else if(mode==="orbital"){
+    const cx = W*0.74, cy = H*0.5;
+    for(let idx=0; idx<state.rings.length; idx++){
+      const r = state.rings[idx];
+      ctx.save(); ctx.translate(cx,cy); ctx.rotate(r.rot);
+      ctx.beginPath();
+      ctx.ellipse(0,0,r.rx*W, r.ry*H, 0, 0, Math.PI*2);
+      ctx.strokeStyle = "rgba(179,157,219,.65)"; ctx.lineWidth = 1.2; ctx.stroke();
+      for(let i=0;i<r.n;i++){
+        const ph = t*r.sp + (i/r.n)*Math.PI*2 + idx;
+        const px = Math.cos(ph)*r.rx*W, py = Math.sin(ph)*r.ry*H;
+        ctx.beginPath(); ctx.arc(px,py,r.size*3,0,Math.PI*2);
+        ctx.fillStyle = "rgba(124,58,237,.13)"; ctx.fill();
+        ctx.beginPath(); ctx.arc(px,py,r.size,0,Math.PI*2);
+        ctx.fillStyle = i%2 ? C.soft : C.deep; ctx.fill();
+      }
+      ctx.restore();
+    }
+    // core
+    ctx.beginPath(); ctx.arc(cx,cy,16,0,Math.PI*2); ctx.fillStyle="rgba(124,58,237,.18)"; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx,cy,9,0,Math.PI*2); ctx.fillStyle=C.deep; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx,cy,4,0,Math.PI*2); ctx.strokeStyle="#fff"; ctx.lineWidth=2; ctx.stroke();
+  }
+
+  else if(mode==="flow"){
+    // fade previous frame for silky trails
+    ctx.fillStyle = "rgba(236,230,247,0.11)";
+    ctx.fillRect(0,0,W,H);
+
+    // phase machine: gather → hold → explode → wander → (loop)
+    const GATHER=2600, HOLD=1500, EXPLODE=500, WANDER=3000;
+    const CYCLE=GATHER+HOLD+EXPLODE+WANDER;
+    const tt = t % CYCLE;
+    let phase = tt<GATHER ? "gather" : tt<GATHER+HOLD ? "hold" : tt<GATHER+HOLD+EXPLODE ? "explode" : "wander";
+
+    const entering = phase!==state.lastPhase;
+    if(phase==="explode" && entering){
+      for(const p of state.ps){
+        const dx=p.x-state.cx, dy=p.y-state.cy, d=Math.hypot(dx,dy)||1;
+        const burst=2.4+Math.random()*3.2;
+        p.vx=(dx/d)*burst + (Math.random()-0.5)*1.6;
+        p.vy=(dy/d)*burst + (Math.random()-0.5)*1.6;
+      }
+    }
+    state.lastPhase = phase;
+
+    ctx.lineWidth = 1;
+    for(const p of state.ps){
+      p.px=p.x; p.py=p.y;
+      if(phase==="gather"){
+        p.vx += (p.tx-p.x)*0.010; p.vy += (p.ty-p.y)*0.010;
+        p.vx*=0.86; p.vy*=0.86;
+        p.x+=p.vx; p.y+=p.vy;
+      } else if(phase==="hold"){
+        p.vx += (p.tx-p.x)*0.08; p.vy += (p.ty-p.y)*0.08;
+        p.vx*=0.55; p.vy*=0.55;
+        p.x+=p.vx + (Math.random()-0.5)*0.4;
+        p.y+=p.vy + (Math.random()-0.5)*0.4;
+      } else if(phase==="explode"){
+        p.vx*=0.99; p.vy*=0.99;
+        p.x+=p.vx; p.y+=p.vy;
+      } else { // wander on a flow field, gently held to the right
+        const a=(Math.sin(p.x*0.005+t*0.0004)+Math.cos(p.y*0.005 - t*0.0003))*Math.PI;
+        p.vx = p.vx*0.82 + Math.cos(a)*0.6 + (state.cx-p.x)*0.0006;
+        p.vy = p.vy*0.82 + Math.sin(a)*0.6 + (state.cy-p.y)*0.0006;
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<W*0.40){p.x=W*0.40;p.vx*=-0.5;}
+        if(p.x>W*1.03){p.x=W*1.03;p.vx*=-0.5;}
+        if(p.y<-H*0.06){p.y=-H*0.06;p.vy*=-0.5;}
+        if(p.y>H*1.06){p.y=H*1.06;p.vy*=-0.5;}
+      }
+      // trail
+      const formed = phase==="hold" || phase==="gather";
+      ctx.strokeStyle = formed ? "rgba(124,58,237,0.28)" : "rgba(124,58,237,0.18)";
+      ctx.beginPath(); ctx.moveTo(p.px,p.py); ctx.lineTo(p.x,p.y); ctx.stroke();
+      // brighter head when formed so the logo reads clearly
+      if(formed){
+        ctx.fillStyle = "rgba(76,29,149,0.7)";
+        ctx.fillRect(p.x-0.7, p.y-0.7, 1.4, 1.4);
+      }
+    }
+  }
+
+  else if(mode==="contour"){
+    const cx = W*0.76, cy = H*0.5;
+    const rings = 9;
+    for(let k=0;k<rings;k++){
+      const base = (k/rings) * Math.min(W,H)*0.7 + 14;
+      ctx.beginPath();
+      for(let a=0;a<=Math.PI*2+0.02;a+=0.12){
+        const wob = Math.sin(a*3 + t*0.0006 + k*0.5)*8 + Math.cos(a*5 - t*0.0004 + k)*6;
+        const rr = base + wob;
+        const x = cx + Math.cos(a)*rr;
+        const y = cy + Math.sin(a)*rr*0.82;
+        if(a===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      const al = 0.10 + (1-k/rings)*0.35;
+      ctx.strokeStyle = `rgba(124,58,237,${al.toFixed(3)})`;
+      ctx.lineWidth = 1.1; ctx.stroke();
+    }
+  }
+
+  else if(mode==="grid"){
+    const horizon = H*0.32;
+    const vp = W*0.5;
+    ctx.strokeStyle = "rgba(124,58,237,0.16)"; ctx.lineWidth = 1;
+    // verticals converging to vanishing point
+    for(let i=-10;i<=10;i++){
+      const x = vp + i*(W/10);
+      ctx.beginPath(); ctx.moveTo(vp + i*30, horizon); ctx.lineTo(x, H); ctx.stroke();
+    }
+    // horizontals receding
+    state.off = (state.off + 0.6) % 40;
+    for(let j=0;j<22;j++){
+      const yy = horizon + Math.pow(j/22,2.2)*(H-horizon) + state.off*Math.pow(j/22,2);
+      if(yy>H) continue;
+      const a = 0.05 + (yy-horizon)/(H-horizon)*0.18;
+      ctx.strokeStyle = `rgba(124,58,237,${a.toFixed(3)})`;
+      ctx.beginPath(); ctx.moveTo(0,yy); ctx.lineTo(W,yy); ctx.stroke();
+    }
+    // horizon glow
+    const g = ctx.createRadialGradient(vp,horizon,0,vp,horizon,W*0.5);
+    g.addColorStop(0,"rgba(179,157,219,.30)"); g.addColorStop(1,"rgba(179,157,219,0)");
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  }
+
+  else if(mode==="minimal"){
+    const cx = (0.78 + Math.sin(t*0.00012)*0.02)*W;
+    const cy = 0.5*H;
+    const rad = Math.min(W,H)*0.9;
+    const g = ctx.createRadialGradient(cx,cy,0,cx,cy,rad);
+    const pulse = 0.16 + Math.sin(t*0.0006)*0.05;
+    g.addColorStop(0,`rgba(124,58,237,${pulse.toFixed(3)})`);
+    g.addColorStop(1,"rgba(124,58,237,0)");
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx,cy,rad,0,Math.PI*2); ctx.fill();
+    // giant faint orbital glyph
+    ctx.save(); ctx.translate(W*0.80, H*0.5); ctx.rotate(t*0.00004);
+    ctx.strokeStyle = "rgba(124,58,237,0.10)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.ellipse(0,0,W*0.16,H*0.30,0,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(0,0,W*0.16,H*0.30,Math.PI/3,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(0,0,W*0.16,H*0.30,-Math.PI/3,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(0,0,10,0,Math.PI*2); ctx.fillStyle="rgba(124,58,237,0.14)"; ctx.fill();
+    ctx.restore();
+  }
+
+  raf = requestAnimationFrame(render);
+}
+
+function start(m){
+  mode = m;
+  setStripes(m!=="grid" && m!=="flow"); // grid & flow read better without stripes
+  size(); init(m);
+  const d = DESCRIPTIONS[m];
+  document.getElementById("desc").innerHTML =
+    `<div class="label">${d.label}</div><h3>${d.name}</h3><p>${d.text}</p><div class="vibe">vibe: <b>${d.vibe}</b></div>`;
+  document.querySelectorAll("#switch button").forEach(b=>b.classList.toggle("on", b.dataset.mode===m));
+  if(raf) cancelAnimationFrame(raf);
+  t0 = performance.now();
+  raf = requestAnimationFrame(render);
+}
+
+document.querySelectorAll("#switch button").forEach(b=>{
+  b.addEventListener("click", ()=>start(b.dataset.mode));
+});
+let rt;
+window.addEventListener("resize", ()=>{ clearTimeout(rt); rt=setTimeout(()=>{ size(); init(mode); }, 150); });
+
+start("flow");
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DuraNoia — Background Loop Options</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --violet-deep:#7c3aed;
+    --violet-soft:#b39ddb;
+    --violet-dark:#4c1d95;
+    --paper:#f6f3fb;
+    --hero:#ece6f7;
+    --ink:#1a1325;
+    --ink2:#5a4e75;
+    --muted:#9087a8;
+    --line:#d9cff0;
+    --mono:"JetBrains Mono", monospace;
+    --sans:"Space Grotesk", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#e8e3ef;font-family:var(--sans);color:var(--ink)}
+  .page{max-width:1480px;margin:0 auto;padding:22px}
+  .top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px;gap:18px;flex-wrap:wrap}
+  h1{font-size:32px;font-weight:800;letter-spacing:-.02em;margin:0}
+  .lede{color:var(--ink2);max-width:60ch;line-height:1.45;margin-top:6px}
+  .note{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+  .pill{font-family:var(--mono);font-size:11px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;background:#fff;color:var(--ink2)}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(76,29,149,.06)}
+  .card-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .card-head h3{margin:0;font-size:16px;font-weight:700;letter-spacing:-.01em}
+  .card-head .meta{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+  .stage{
+    position:relative;
+    aspect-ratio:16/9;
+    background:var(--hero);
+    overflow:hidden;
+  }
+  .stage canvas, .stage svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .stage-overlay{
+    position:absolute;inset:0;pointer-events:none;
+    display:flex;align-items:flex-end;justify-content:space-between;
+    padding:14px 16px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--violet-dark);opacity:.55;
+  }
+  .card-body{padding:14px 16px;border-top:1px solid var(--line);background:#fbf9fe}
+  .card-body p{margin:0 0 6px;font-size:13.5px;color:var(--ink2);line-height:1.45}
+  .card-body .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .tag{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:4px;background:#ece6f7;color:var(--violet-dark);letter-spacing:.04em}
+
+  .pick{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--violet-deep);font-weight:600;
+  }
+
+  /* Hero preview at the bottom — shows the chosen loop in real layout context */
+  .hero-preview{margin-top:24px}
+  .hero-frame{position:relative;height:520px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--hero)}
+  .hero-frame canvas, .hero-frame svg{position:absolute;inset:0;width:100%;height:100%}
+  .hero-content{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding:0 60px}
+  .hero-content .h1{font-size:72px;font-weight:800;letter-spacing:-.025em;line-height:.94;color:var(--violet-dark);text-align:right;max-width:580px;white-space:pre-line}
+  .switcher{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+  .switcher button{font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--ink2)}
+  .switcher button.on{background:var(--violet-deep);border-color:var(--violet-deep);color:#fff}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top">
+    <div>
+      <div class="note">DuraNoia · hero background</div>
+      <h1>Four loop concepts for the hero</h1>
+      <p class="lede">All canvas-rendered, so they're crisp at 4K, loop seamlessly, and stay light on bandwidth (~zero — they're math, not video). Pick one and I'll drop it into the wireframe.</p>
+    </div>
+    <div style="display:flex;gap:8px"><span class="pill">canvas · 60fps</span><span class="pill">brand palette</span><span class="pill">seamless loop</span></div>
+  </div>
+
+  <div class="grid">
+    <!-- 01 Orbital Network -->
+    <div class="card">
+      <div class="card-head">
+        <h3>01 · Orbital Network</h3>
+        <div class="meta">echoes the logo · calm</div>
+      </div>
+      <div class="stage"><canvas data-loop="orbital"></canvas>
+        <div class="stage-overlay"><span>▶ LOOP_01.ORBITAL</span><span>04 PLANETS</span></div>
+      </div>
+      <div class="card-body">
+        <p>A slow, dignified orbital system — small nodes circling concentric rings, occasionally firing a connection line. Direct visual rhyme with your logo.</p>
+        <div class="tags"><span class="tag">subtle</span><span class="tag">on-brand</span><span class="tag">low motion</span></div>
+      </div>
+    </div>
+
+    <!-- 02 Neural Constellation -->
+    <div class="card">
+      <div class="card-head">
+        <h3>02 · Neural Constellation</h3>
+        <div class="meta">network · alive</div>
+      </div>
+      <div class="stage"><canvas data-loop="neural"></canvas>
+        <div class="stage-overlay"><span>▶ LOOP_02.NEURAL</span><span>180 NODES</span></div>
+      </div>
+      <div class="card-body">
+        <p>Floating nodes connected by faint lines that brighten when nodes pass close to each other. Reads as "AI thinking" without being too on-the-nose.</p>
+        <div class="tags"><span class="tag">dynamic</span><span class="tag">tech</span><span class="tag">classic</span></div>
+      </div>
+    </div>
+
+    <!-- 03 Signal Sweep -->
+    <div class="card">
+      <div class="card-head">
+        <h3>03 · Signal Sweep</h3>
+        <div class="meta">radar · paranoia</div>
+      </div>
+      <div class="stage"><canvas data-loop="sweep"></canvas>
+        <div class="stage-overlay"><span>▶ LOOP_03.SWEEP</span><span>SCANNING…</span></div>
+      </div>
+      <div class="card-body">
+        <p>A slow radar sweep across a grid of dormant nodes; each one lights up briefly when the sweep crosses it. Most "DuraNoia / surveillance" energy.</p>
+        <div class="tags"><span class="tag">on-theme</span><span class="tag">cinematic</span><span class="tag">moderate motion</span></div>
+      </div>
+    </div>
+
+    <!-- 04 Data Field -->
+    <div class="card">
+      <div class="card-head">
+        <h3>04 · Data Field</h3>
+        <div class="meta">drift · ambient</div>
+      </div>
+      <div class="stage"><canvas data-loop="field"></canvas>
+        <div class="stage-overlay"><span>▶ LOOP_04.FIELD</span><span>DRIFTING</span></div>
+      </div>
+      <div class="card-body">
+        <p>Slow vertical drift of glyphs / particle dust — a violet "Matrix" you can almost ignore. Best if you want the text to be the star and the bg to disappear.</p>
+        <div class="tags"><span class="tag">very subtle</span><span class="tag">readable</span><span class="tag">non-distracting</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero-context preview -->
+  <div class="hero-preview">
+    <div class="note" style="margin-bottom:8px">// In-context preview — what the hero actually looks like with the chosen loop</div>
+    <div class="switcher" id="switcher">
+      <button data-pick="orbital" class="on">01 · Orbital</button>
+      <button data-pick="neural">02 · Neural</button>
+      <button data-pick="sweep">03 · Sweep</button>
+      <button data-pick="field">04 · Field</button>
+    </div>
+    <div class="hero-frame">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero-content">
+        <div class="h1">Understand AI before
+it understands you.</div>
+      </div>
+      <!-- Mock AI grid bottom-left in real position -->
+      <div style="position:absolute;left:54px;bottom:54px;width:340px;background:rgba(246,243,251,.95);border:1px solid rgba(124,58,237,.35);border-radius:8px;padding:14px;backdrop-filter:blur(8px);box-shadow:0 0 0 1px rgba(124,58,237,.1) inset, 0 30px 60px rgba(76,29,149,.15)">
+        <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--violet-deep);letter-spacing:.12em;font-weight:600;margin-bottom:10px"><span>◇ SELECT A MODEL</span><span style="color:var(--muted)">08 / 08</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--ink)">
+          <div style="border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:4px;display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;background:#ece6f7;border-radius:3px;display:grid;place-items:center;font-weight:700;color:var(--violet-dark)">G</span>ChatGPT</div>
+          <div style="border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:4px;display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;background:#ece6f7;border-radius:3px;display:grid;place-items:center;font-weight:700;color:var(--violet-dark)">C</span>Claude</div>
+          <div style="border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:4px;display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;background:#ece6f7;border-radius:3px;display:grid;place-items:center;font-weight:700;color:var(--violet-dark)">✦</span>Gemini</div>
+          <div style="border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:4px;display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;background:#ece6f7;border-radius:3px;display:grid;place-items:center;font-weight:700;color:var(--violet-dark)">▲</span>Copilot</div>
+          <div style="border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:4px;display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;background:#ece6f7;border-radius:3px;display:grid;place-items:center;font-weight:700;color:var(--violet-dark)">X</span>Grok</div>
+          <div style="border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:4px;display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;background:#ece6f7;border-radius:3px;display:grid;place-items:center;font-weight:700;color:var(--violet-dark)">L</span>Llama</div>
+          <div style="border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:4px;display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;background:#ece6f7;border-radius:3px;display:grid;place-items:center;font-weight:700;color:var(--violet-dark)">P</span>Perplexity</div>
+          <div style="border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:4px;display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;background:#ece6f7;border-radius:3px;display:grid;place-items:center;font-weight:700;color:var(--violet-dark)">M</span>Mistral</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="loops.js"></script>
+</body>
+</html>

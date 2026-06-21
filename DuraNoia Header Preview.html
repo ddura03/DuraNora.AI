@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DuraNoia — Header Preview with Raven Marks</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#7c3aed; --soft:#b39ddb; --dark:#4c1d95;
+    --paper:#f6f3fb; --paper2:#ece6f7; --ink:#1a1325; --ink2:#5a4e75; --line:#d9cff0;
+    --mono:"JetBrains Mono",monospace; --sans:"Space Grotesk",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#e3def0;color:var(--ink);font-family:var(--sans)}
+  .page{max-width:1200px;margin:0 auto;padding:34px 22px 80px}
+  .lead .kick{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--deep);font-weight:600}
+  .lead h1{font-size:30px;font-weight:800;letter-spacing:-.02em;margin:10px 0 8px}
+  .lead p{font-size:14.5px;color:var(--ink2);max-width:68ch;line-height:1.55;margin:0 0 26px}
+
+  .label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink2);font-weight:700;margin:30px 0 12px;display:flex;align-items:center;gap:10px}
+  .label .dot{width:8px;height:8px;border-radius:50%;background:var(--deep)}
+
+  /* Browser frame */
+  .frame{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 18px 44px rgba(76,29,149,.14);background:#fff}
+  .bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#efe9f8;border-bottom:1px solid var(--line)}
+  .bar i{width:11px;height:11px;border-radius:50%;display:block}
+  .bar .u{margin-left:14px;font-family:var(--mono);font-size:11px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:7px;padding:4px 12px}
+
+  /* === Real home header (navstrip) === */
+  .navstrip{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px max(34px,4vw);
+    border-bottom:1.5px solid var(--line);
+    background:var(--paper);
+    font-family:var(--mono);font-size:13.5px;letter-spacing:.04em;
+  }
+  .brand{display:flex;align-items:center;gap:11px}
+  .brand svg{width:30px;height:30px;display:block}
+  .brand .wm{font-family:var(--sans);font-size:18px;font-weight:800;letter-spacing:-.01em}
+  .brand .wm .d{color:var(--ink)} .brand .wm .n{color:var(--deep)}
+  .brand .tag{font-family:var(--mono);font-size:10px;color:var(--dark);letter-spacing:.18em;margin-left:8px;font-weight:600}
+  .links{display:flex;gap:38px;font-family:var(--sans);font-size:13.5px;font-weight:600;color:var(--ink)}
+  .links span{position:relative;cursor:pointer;padding:4px 0}
+  .links span::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--deep);transform:scaleX(0);transform-origin:left;transition:transform .28s}
+  .links span:hover::after{transform:scaleX(1)}
+  .pills{display:flex;gap:8px}
+  .pill{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:#fff;color:var(--ink2)}
+  .pill.ghost{border-color:var(--dark);color:var(--ink)}
+  .pill.solid{background:var(--deep);border-color:var(--deep);color:#fff}
+
+  /* hero sliver under the header so it reads like the page */
+  .hero{height:120px;position:relative;overflow:hidden;background:
+    radial-gradient(circle at 24% 40%, rgba(124,58,237,.16) 0, transparent 55%),
+    repeating-linear-gradient(135deg,#ece6f7 0 16px,#e3daf2 16px 32px);
+    display:flex;align-items:center;padding:0 max(34px,4vw)}
+  .hero .h{font-size:30px;font-weight:800;letter-spacing:-.02em;color:var(--dark);line-height:1}
+  .hero .h em{font-style:italic;color:var(--deep)}
+
+  .cap{font-size:13px;color:var(--ink2);margin:12px 2px 0;line-height:1.5}
+  .cap b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="lead">
+    <div class="kick">DuraNoia · Header preview</div>
+    <h1>Your home header, wearing each raven.</h1>
+    <p>This is a faithful mock of the real home-page nav — same lavender bar, wordmark, links, and pills — with just the logo swapped. It's a preview only; your live site is untouched. Hover the nav words to confirm the underline still feels right.</p>
+  </div>
+
+  <div class="label"><span class="dot"></span>Option A — “Watchful” raven (filled head profile)</div>
+  <div class="frame">
+    <div class="bar"><i style="background:#e06c6c"></i><i style="background:#e0b24c"></i><i style="background:#5cb872"></i><span class="u">duranoia.ai</span></div>
+    <div class="navstrip">
+      <div class="brand">
+        <svg viewBox="0 0 100 100"><path d="M60 22 C73 22 81 33 81 47 C81 61 71 69 59 69 C53 69 48 66 45 61 L12 54 L45 47 C46 35 50 22 60 22 Z" fill="#7c3aed"/><circle cx="63" cy="43" r="5.2" fill="#fff"/><circle cx="63" cy="43" r="2.2" fill="#4c1d95"/></svg>
+        <span class="wm"><span class="d">Dura</span><span class="n">Noia</span></span>
+        <span class="tag">AI EDUCATION PLATFORM</span>
+      </div>
+      <div class="links"><span>Learn AI</span><span>AI Ecosystem</span><span>Dashboard</span><span>AI Showcase</span><span>News</span><span>About</span></div>
+      <div class="pills"><span class="pill ghost">Sign in</span><span class="pill solid">Get started →</span></div>
+    </div>
+    <div class="hero"><div class="h">The AI knows you.<br/><em>Now know it back.</em></div></div>
+  </div>
+  <div class="cap"><b>Watchful</b> — clean, iconic, reads instantly as a bird even at 30px. The safe, strong choice.</div>
+
+  <div class="label"><span class="dot"></span>Option B — “Faceted” raven (low-poly head)</div>
+  <div class="frame">
+    <div class="bar"><i style="background:#e06c6c"></i><i style="background:#e0b24c"></i><i style="background:#5cb872"></i><span class="u">duranoia.ai</span></div>
+    <div class="navstrip">
+      <div class="brand">
+        <svg viewBox="0 0 100 100"><polygon points="60,20 82,46 60,50" fill="#7c3aed"/><polygon points="60,50 82,46 64,72" fill="#5f2bc0"/><polygon points="60,20 60,50 42,44" fill="#9b6be0"/><polygon points="42,44 60,50 38,58" fill="#7c3aed"/><polygon points="38,58 60,50 14,55" fill="#b39ddb"/><polygon points="60,50 64,72 50,64" fill="#7c3aed"/><circle cx="64" cy="41" r="3" fill="#fff"/></svg>
+        <span class="wm"><span class="d">Dura</span><span class="n">Noia</span></span>
+        <span class="tag">AI EDUCATION PLATFORM</span>
+      </div>
+      <div class="links"><span>Learn AI</span><span>AI Ecosystem</span><span>Dashboard</span><span>AI Showcase</span><span>News</span><span>About</span></div>
+      <div class="pills"><span class="pill ghost">Sign in</span><span class="pill solid">Get started →</span></div>
+    </div>
+    <div class="hero"><div class="h">The AI knows you.<br/><em>Now know it back.</em></div></div>
+  </div>
+  <div class="cap"><b>Faceted</b> — more design-forward and distinctly “tech.” The planes add color depth but read slightly busier at small sizes.</div>
+
+</div>
+</body>
+</html>

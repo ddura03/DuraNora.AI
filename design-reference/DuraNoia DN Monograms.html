@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DuraNoia — D &amp; DN Monograms</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#7c3aed; --soft:#b39ddb; --dark:#4c1d95;
+    --paper:#f6f3fb; --ink:#1a1325; --ink2:#5a4e75; --muted:#9087a8; --line:#ddd3f0;
+    --mono:"JetBrains Mono",monospace; --sans:"Space Grotesk",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#efeaf7;color:var(--ink);font-family:var(--sans)}
+  .wrap{max-width:1240px;margin:0 auto;padding:40px max(24px,4vw) 90px}
+  header .kick{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--deep);font-weight:600}
+  header h1{font-size:38px;font-weight:800;letter-spacing:-.025em;margin:12px 0 10px;line-height:1.04}
+  header p{font-size:15.5px;color:var(--ink2);max-width:72ch;line-height:1.55;margin:0}
+  .sectitle{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink2);font-weight:700;margin:34px 0 16px;display:flex;align-items:center;gap:12px}
+  .sectitle::after{content:"";flex:1;height:1px;background:var(--line)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{background:#fff;border:1.5px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+  .card:hover{transform:translateY(-4px);border-color:var(--deep);box-shadow:0 18px 40px rgba(124,58,237,.16)}
+  .tile{height:196px;display:grid;place-items:center;background:
+    radial-gradient(circle at 50% 38%, #fff 0, transparent 70%),
+    repeating-linear-gradient(135deg,#f4f0fb 0 16px,#efe9f8 16px 32px);
+    border-bottom:1.5px solid var(--line);position:relative}
+  .tile svg{width:102px;height:102px;display:block}
+  .tile .no{position:absolute;top:12px;left:14px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em}
+  .tile .dark{position:absolute;top:12px;right:12px;width:48px;height:48px;border-radius:12px;background:#1a1325;display:grid;place-items:center;box-shadow:0 6px 16px rgba(26,19,37,.35)}
+  .tile .dark svg{width:31px;height:31px}
+  .meta{padding:16px 18px 18px}
+  .meta .nm{font-size:17px;font-weight:800;letter-spacing:-.01em}
+  .meta .rat{font-size:12.8px;color:var(--ink2);line-height:1.5;margin-top:5px}
+  .lockup{display:flex;align-items:center;gap:9px;padding:13px 18px;border-top:1.5px solid var(--line);background:var(--paper)}
+  .lockup svg{width:27px;height:27px}
+  .lockup .wm{font-size:18px;font-weight:800;letter-spacing:-.01em}
+  .lockup .wm .d{color:var(--ink)} .lockup .wm .n{color:var(--deep)}
+  .lockup .tag{font-family:var(--mono);font-size:8px;letter-spacing:.16em;color:var(--dark);font-weight:600;margin-left:auto;opacity:.7}
+  footer{margin-top:42px;font-size:13.5px;color:var(--ink2);line-height:1.6}
+  footer b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kick">DuraNoia · Identity exploration — D &amp; DN</div>
+    <h1>Eight lettermarks: D and DN.</h1>
+    <p>Monograms built on the <b>D</b> alone or the <b>DN</b> pairing — the most direct, ownable kind of logo. Each keeps an AI cue (a node, a stack, a circuit) without leaning futuristic-cliché. Your exact violet palette. Nothing on your site changed.</p>
+  </header>
+
+  <div class="sectitle">Single D</div>
+  <div class="grid" id="grid-d"></div>
+
+  <div class="sectitle">DN together</div>
+  <div class="grid" id="grid-dn"></div>
+
+  <footer><b>Reading guide:</b> big tile = the mark, dark chip = reversed for dark UI, bottom strip = the lockup. Palette: deep <b>#7c3aed</b> / soft <b>#b39ddb</b> / dark <b>#4c1d95</b>. Tell me a favorite (or “combine #X and #Y”) and I'll refine it and preview it in the real header.</footer>
+</div>
+<script>
+const wordmark = `<span class="wm"><span class="d">Dura</span><span class="n">Noia</span></span>`;
+
+const C = {
+  nodeD: `
+    <path d="M30 18 H52 A32 32 0 0 1 52 82 H30 Z" fill="none" stroke="#7c3aed" stroke-width="7" stroke-linejoin="round"/>
+    <circle cx="46" cy="50" r="9.5" fill="#7c3aed"/>
+    <g stroke="#b39ddb" stroke-width="3"><line x1="55" y1="50" x2="68" y2="50"/><line x1="46" y1="41" x2="46" y2="31"/><line x1="46" y1="59" x2="46" y2="69"/></g>
+    <circle cx="71" cy="50" r="3.4" fill="#b39ddb"/><circle cx="46" cy="28" r="3.4" fill="#b39ddb"/><circle cx="46" cy="72" r="3.4" fill="#b39ddb"/>`,
+  solidD: `
+    <path d="M28 18 H50 A32 32 0 0 1 50 82 H28 Z" fill="#7c3aed"/>
+    <path d="M28 33 H49 A17 17 0 0 1 49 67 H28 Z" fill="#fff"/>
+    <circle cx="41" cy="50" r="6" fill="#7c3aed"/>`,
+  stackD: `
+    <path d="M30 20 H49 A15 15 0 0 1 49 50 H30 Z" fill="#7c3aed"/>
+    <path d="M30 50 H47 A13 13 0 0 1 47 76 H30 Z" fill="#b39ddb"/>
+    <circle cx="42" cy="35" r="4.6" fill="#fff"/>
+    <circle cx="40" cy="63" r="4" fill="#fff"/>`,
+  circuitD: `
+    <path d="M30 20 H50 A30 30 0 0 1 50 80 H30 Z" fill="none" stroke="#7c3aed" stroke-width="6.5" stroke-linejoin="round"/>
+    <g stroke="#b39ddb" stroke-width="3" fill="none">
+      <path d="M30 38 H44"/><path d="M30 62 H40"/>
+    </g>
+    <circle cx="44" cy="38" r="3.6" fill="#7c3aed"/>
+    <circle cx="40" cy="62" r="3.6" fill="#7c3aed"/>
+    <circle cx="58" cy="50" r="5.5" fill="#7c3aed"/>`,
+  dnLig: `
+    <path d="M20 24 H40 A26 26 0 0 1 40 76 H20 Z" fill="none" stroke="#7c3aed" stroke-width="6.5" stroke-linejoin="round"/>
+    <path d="M52 76 V24 L80 76 V24" fill="none" stroke="#4c1d95" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="34" cy="50" r="5.5" fill="#7c3aed"/>`,
+  dnStack: `
+    <path d="M22 22 H40 A24 24 0 0 1 40 70 H22 Z" fill="#7c3aed"/>
+    <path d="M34 70 V30 L60 70 V30" fill="none" stroke="#4c1d95" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="31" cy="46" r="5" fill="#fff"/>`,
+  dnBadge: `
+    <rect x="14" y="14" width="72" height="72" rx="20" fill="#7c3aed"/>
+    <path d="M28 32 H42 A18 18 0 0 1 42 68 H28 Z" fill="none" stroke="#fff" stroke-width="5.5" stroke-linejoin="round"/>
+    <path d="M52 68 V32 L68 68 V32" fill="none" stroke="#b39ddb" stroke-width="5.5" stroke-linejoin="round" stroke-linecap="round"/>`,
+  dnNode: `
+    <path d="M18 26 H36 A24 24 0 0 1 36 74 H18 Z" fill="none" stroke="#7c3aed" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M50 74 V26 L78 74 V26" fill="none" stroke="#7c3aed" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+    <g fill="#b39ddb"><circle cx="50" cy="26" r="4.2"/><circle cx="78" cy="26" r="4.2"/><circle cx="64" cy="50" r="4.2"/></g>
+    <line x1="50" y1="26" x2="64" y2="50" stroke="#b39ddb" stroke-width="2.4"/>
+    <line x1="64" y1="50" x2="78" y2="26" stroke="#b39ddb" stroke-width="2.4"/>`,
+};
+
+const D = [
+  ["nodeD","Node D","Outline D with a node core wired to three points. The cleanest D + neural-hub fusion; favicon-safe."],
+  ["solidD","Counter D","A bold solid D whose counter holds a violet pupil-node. Heavy, confident, unmistakable at any size."],
+  ["stackD","Stacked D","The D as two offset layers with node dots — data layers / a model stack. Modern and a little unexpected."],
+  ["circuitD","Circuit D","Outline D with two short traces feeding a core node just outside it. Techy without being busy."],
+];
+const DN = [
+  ["dnLig","DN Ligature","A rounded D beside a sharp N, sharing the violet palette. Clean, classic, reads as your initials instantly."],
+  ["dnStack","DN Solid","A filled D with a node, an outlined N beside it. Strong contrast of weight — great as an app icon."],
+  ["dnBadge","DN Badge","Both letters reversed out of a rounded violet tile. The most app-icon / avatar-ready of the set."],
+  ["dnNode","DN Network","D and N where the N's path is wired with nodes — the AI cue lives in the second letter. Distinctive."],
+];
+
+function darken(svg){
+  return svg
+    .replaceAll('#7c3aed','#c4b0f0').replaceAll('#4c1d95','#b39ddb')
+    .replaceAll('#fff','#1a1325').replaceAll('#ffffff','#1a1325');
+}
+function card([key,name,rat],i){
+  const svg = C[key];
+  return `
+  <div class="card">
+    <div class="tile">
+      <span class="no">${String(i).padStart(2,'0')}</span>
+      <div class="dark"><svg viewBox="0 0 100 100">${darken(svg)}</svg></div>
+      <svg viewBox="0 0 100 100">${svg}</svg>
+    </div>
+    <div class="meta"><div class="nm">${name}</div><div class="rat">${rat}</div></div>
+    <div class="lockup"><svg viewBox="0 0 100 100">${svg}</svg>${wordmark}<span class="tag">AI EDUCATION</span></div>
+  </div>`;
+}
+let n=1;
+document.getElementById('grid-d').innerHTML = D.map(c=>card(c,n++)).join('');
+document.getElementById('grid-dn').innerHTML = DN.map(c=>card(c,n++)).join('');
+</script>
+</body>
+</html>

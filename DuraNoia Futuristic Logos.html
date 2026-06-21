@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DuraNoia — Futuristic AI Marks</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#7c3aed; --soft:#b39ddb; --dark:#4c1d95;
+    --paper:#f6f3fb; --ink:#1a1325; --ink2:#5a4e75; --muted:#9087a8; --line:#ddd3f0;
+    --mono:"JetBrains Mono",monospace; --sans:"Space Grotesk",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#efeaf7;color:var(--ink);font-family:var(--sans)}
+  .wrap{max-width:1240px;margin:0 auto;padding:40px max(24px,4vw) 90px}
+  header .kick{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--deep);font-weight:600}
+  header h1{font-size:38px;font-weight:800;letter-spacing:-.025em;margin:12px 0 10px;line-height:1.04}
+  header p{font-size:15.5px;color:var(--ink2);max-width:72ch;line-height:1.55;margin:0}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px}
+  @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{background:#fff;border:1.5px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+  .card:hover{transform:translateY(-4px);border-color:var(--deep);box-shadow:0 18px 40px rgba(124,58,237,.16)}
+  .tile{height:196px;display:grid;place-items:center;background:
+    radial-gradient(circle at 50% 38%, #fff 0, transparent 70%),
+    repeating-linear-gradient(135deg,#f4f0fb 0 16px,#efe9f8 16px 32px);
+    border-bottom:1.5px solid var(--line);position:relative}
+  .tile svg{width:100px;height:100px;display:block}
+  .tile .no{position:absolute;top:12px;left:14px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em}
+  .tile .dark{position:absolute;top:12px;right:12px;width:48px;height:48px;border-radius:12px;background:#1a1325;display:grid;place-items:center;box-shadow:0 6px 16px rgba(26,19,37,.35)}
+  .tile .dark svg{width:31px;height:31px}
+  .meta{padding:16px 18px 18px}
+  .meta .nm{font-size:17px;font-weight:800;letter-spacing:-.01em}
+  .meta .rat{font-size:12.8px;color:var(--ink2);line-height:1.5;margin-top:5px}
+  .lockup{display:flex;align-items:center;gap:9px;padding:13px 18px;border-top:1.5px solid var(--line);background:var(--paper)}
+  .lockup svg{width:27px;height:27px}
+  .lockup .wm{font-size:18px;font-weight:800;letter-spacing:-.01em}
+  .lockup .wm .d{color:var(--ink)} .lockup .wm .n{color:var(--deep)}
+  .lockup .tag{font-family:var(--mono);font-size:8px;letter-spacing:.16em;color:var(--dark);font-weight:600;margin-left:auto;opacity:.7}
+  footer{margin-top:42px;font-size:13.5px;color:var(--ink2);line-height:1.6}
+  footer b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kick">DuraNoia · Identity exploration — Futuristic / AI</div>
+    <h1>Nine futuristic AI marks.</h1>
+    <p>Clean, geometric, tech-forward symbols — the kind you'd expect on an AI product. Most build on the letter <b>D</b>, a core node, or a containment/processing motif. All in your exact violet palette. Nothing on your site changed; pick the ones that click and I'll refine and test them live.</p>
+  </header>
+  <div class="grid" id="grid"></div>
+  <footer><b>Reading guide:</b> big tile = the mark, dark chip top-right = reversed for dark UI, bottom strip = the lockup with the wordmark. Palette: deep <b>#7c3aed</b> / soft <b>#b39ddb</b> / dark <b>#4c1d95</b>. Tell me a favorite (or “combine #X and #Y”) and I'll refine it and preview it in the real header.</footer>
+</div>
+<script>
+const wordmark = `<span class="wm"><span class="d">Dura</span><span class="n">Noia</span></span>`;
+
+const C = {
+  coreD: `
+    <path d="M30 18 H52 A32 32 0 0 1 52 82 H30 Z" fill="none" stroke="#7c3aed" stroke-width="7" stroke-linejoin="round"/>
+    <circle cx="47" cy="50" r="10" fill="#7c3aed"/>
+    <g stroke="#b39ddb" stroke-width="3"><line x1="57" y1="50" x2="70" y2="50"/><line x1="47" y1="40" x2="47" y2="30"/><line x1="47" y1="60" x2="47" y2="70"/></g>
+    <circle cx="73" cy="50" r="3.4" fill="#b39ddb"/><circle cx="47" cy="27" r="3.4" fill="#b39ddb"/><circle cx="47" cy="73" r="3.4" fill="#b39ddb"/>`,
+  hexcore: `
+    <polygon points="50,14 81,32 81,68 50,86 19,68 19,32" fill="none" stroke="#7c3aed" stroke-width="6" stroke-linejoin="round"/>
+    <polygon points="50,32 66,41 66,59 50,68 34,59 34,41" fill="#b39ddb" opacity=".4"/>
+    <circle cx="50" cy="50" r="9" fill="#7c3aed"/>
+    <circle cx="50" cy="50" r="3.6" fill="#fff"/>`,
+  pulse: `
+    <rect x="16" y="16" width="68" height="68" rx="20" fill="none" stroke="#7c3aed" stroke-width="6"/>
+    <path d="M26 50 H40 L46 36 L54 64 L60 50 H74" fill="none" stroke="#7c3aed" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="74" cy="50" r="3.6" fill="#b39ddb"/>`,
+  prism: `
+    <polygon points="50,16 84,72 16,72" fill="none" stroke="#7c3aed" stroke-width="6" stroke-linejoin="round"/>
+    <line x1="50" y1="16" x2="50" y2="72" stroke="#b39ddb" stroke-width="3.4"/>
+    <line x1="50" y1="44" x2="84" y2="72" stroke="#b39ddb" stroke-width="3.4"/>
+    <line x1="50" y1="44" x2="16" y2="72" stroke="#b39ddb" stroke-width="3.4"/>
+    <circle cx="50" cy="44" r="7.5" fill="#7c3aed"/>`,
+  scan: `
+    <circle cx="50" cy="50" r="34" fill="none" stroke="#b39ddb" stroke-width="4.5"/>
+    <path d="M50 16 A34 34 0 0 1 84 50" fill="none" stroke="#7c3aed" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="50" cy="50" r="13" fill="none" stroke="#7c3aed" stroke-width="5"/>
+    <circle cx="50" cy="50" r="4.5" fill="#7c3aed"/>`,
+  stackD: `
+    <g fill="#7c3aed">
+      <path d="M28 22 H48 A14 14 0 0 1 48 50 H28 Z"/>
+    </g>
+    <g fill="#b39ddb">
+      <path d="M28 50 H46 A12 12 0 0 1 46 74 H28 Z"/>
+    </g>
+    <circle cx="40" cy="36" r="4.6" fill="#fff"/>
+    <circle cx="38" cy="62" r="4" fill="#fff"/>`,
+  cube: `
+    <path d="M50 16 L80 33 V67 L50 84 L20 67 V33 Z" fill="none" stroke="#7c3aed" stroke-width="5.5" stroke-linejoin="round"/>
+    <path d="M50 16 L50 50 L20 33" fill="none" stroke="#b39ddb" stroke-width="3.4"/>
+    <path d="M50 50 L80 33" fill="none" stroke="#b39ddb" stroke-width="3.4"/>
+    <path d="M50 50 L50 84" fill="none" stroke="#b39ddb" stroke-width="3.4"/>
+    <circle cx="50" cy="50" r="6.5" fill="#7c3aed"/>`,
+  aperture: `
+    <circle cx="50" cy="50" r="37" fill="none" stroke="#b39ddb" stroke-width="4.5"/>
+    <g stroke="#7c3aed" stroke-width="5.5" stroke-linecap="round">
+      <line x1="82" y1="50" x2="60" y2="55"/><line x1="66" y1="78" x2="50" y2="61"/>
+      <line x1="34" y1="78" x2="40" y2="56"/><line x1="18" y1="50" x2="40" y2="45"/>
+      <line x1="34" y1="22" x2="50" y2="39"/><line x1="66" y1="22" x2="60" y2="44"/>
+    </g>
+    <circle cx="50" cy="50" r="4" fill="#4c1d95"/>`,
+  orbitD: `
+    <path d="M32 22 H50 A28 28 0 0 1 50 78 H32 Z" fill="#7c3aed"/>
+    <ellipse cx="48" cy="50" rx="40" ry="13" fill="none" stroke="#4c1d95" stroke-width="4" transform="rotate(-22 48 50)"/>
+    <circle cx="83" cy="36" r="4.4" fill="#7c3aed"/>
+    <circle cx="44" cy="50" r="7" fill="#fff"/>`,
+};
+
+const items = [
+  ["coreD","Core D","A precise letter D with a node core wired to three points — the cleanest fusion of the name and a neural hub. My pick for a primary mark."],
+  ["hexcore","Hex Core","A hexagon (the universal “module/AI compute” shape) holding a glowing core. Reads as a processor or a token. Very product-logo."],
+  ["pulse","Pulse Square","A rounded-square app icon with a heartbeat line — live, current, “plugged into AI.” Looks native on a phone home screen."],
+  ["prism","Prism","A triangle splitting into inner edges from a core — intelligence refracting into clarity. Sharp and confident."],
+  ["scan","Scan Ring","A ring with one bright sweeping arc around a target core — active, listening, “processing.” Subtle motion implied."],
+  ["stackD","Stacked D","The D split into two offset layers — depth, data layers, a model stack. Modern and a little unexpected."],
+  ["cube","Data Cube","An isometric cube with a core node — structure, dimension, a contained model. Strong, techy, dimensional."],
+  ["aperture","Aperture","Camera-iris blades closing to a point — focus and clarity, “bring AI into focus.” Crisp and timeless."],
+  ["orbitD","Orbit D","Your original idea reborn as a solid D with one clean tilted ring + node — evolution of what you have, not a full departure."],
+];
+
+function darken(svg){
+  return svg
+    .replaceAll('#7c3aed','#c4b0f0').replaceAll('#4c1d95','#b39ddb')
+    .replaceAll('#fff','#1a1325').replaceAll('#ffffff','#1a1325');
+}
+function card([key,name,rat],i){
+  const svg = C[key];
+  return `
+  <div class="card">
+    <div class="tile">
+      <span class="no">${String(i+1).padStart(2,'0')}</span>
+      <div class="dark"><svg viewBox="0 0 100 100">${darken(svg)}</svg></div>
+      <svg viewBox="0 0 100 100">${svg}</svg>
+    </div>
+    <div class="meta"><div class="nm">${name}</div><div class="rat">${rat}</div></div>
+    <div class="lockup"><svg viewBox="0 0 100 100">${svg}</svg>${wordmark}<span class="tag">AI EDUCATION</span></div>
+  </div>`;
+}
+document.getElementById('grid').innerHTML = items.map(card).join('');
+</script>
+</body>
+</html>
