@@ -44,6 +44,7 @@ export function SignInPageContent() {
       // Session still persists in cookies; checkbox is visual-only for now.
     }
 
+    await fetch("/api/auth/ensure-profile", { method: "POST" });
     router.push(redirectTo);
     router.refresh();
   }

@@ -77,6 +77,7 @@ export function SignUpPageContent() {
     }
 
     if (data.session) {
+      await fetch("/api/auth/ensure-profile", { method: "POST" });
       router.push(redirectTo);
       router.refresh();
       return;

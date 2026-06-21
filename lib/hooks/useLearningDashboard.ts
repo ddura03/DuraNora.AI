@@ -19,28 +19,45 @@ export function useLearningDashboard() {
     let cancelled = false;
 
     async function load() {
-      const [progress, resumeState] = await Promise.all([fetchAllProgress(), fetchResumeState()]);
+      try {
+        const [progress, resumeState] = await Promise.all([fetchAllProgress(), fetchResumeState()]);
 
-      if (cancelled) return;
+        if (cancelled) return;
 
-      const nextModels = AI_CATALOG.map((m) => {
-        const slug = m.name.toLowerCase();
-        const total = lessonTotal(slug);
-        const done = Math.min((progress[slug] ?? []).length, total);
-        return {
-          ...m,
-          slug,
-          done,
-          total,
-          pct: total ? Math.round((done / total) * 100) : 0,
-          started: done > 0,
-          finished: total > 0 && done >= total,
-        };
-      });
+        const nextModels = AI_CATALOG.map((m) => {
+          const slug = m.name.toLowerCase();
+          const total = lessonTotal(slug);
+          const done = Math.min((progress[slug] ?? []).length, total);
+          return {
+            ...m,
+            slug,
+            done,
+            total,
+            pct: total ? Math.round((done / total) * 100) : 0,
+            started: done > 0,
+            finished: total > 0 && done >= total,
+          };
+        });
 
-      setModels(nextModels);
-      setResume(resumeState ?? defaultResume());
-      setLoading(false);
+        setModels(nextModels);
+        setResume(resumeState ?? defaultResume());
+      } catch (error) {
+        console.error("[useLearningDashboard] Failed to load progress:", error);
+        setModels(
+          AI_CATALOG.map((m) => ({
+            ...m,
+            slug: m.name.toLowerCase(),
+            done: 0,
+            total: lessonTotal(m.name.toLowerCase()),
+            pct: 0,
+            started: false,
+            finished: false,
+          })),
+        );
+        setResume(defaultResume());
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     }
 
     load();

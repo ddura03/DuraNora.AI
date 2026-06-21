@@ -12,7 +12,7 @@ export function LearnAiHome() {
   const { firstName, streak, profile } = useUserProfile();
   const { models, resume: RESUME, loading } = useLearningDashboard();
   const started = models.filter((m) => m.started);
-  const resumeModel = models.find((m) => m.name === RESUME.model) || models[0];
+  const resumeModel = models.find((m) => m.name === RESUME.model) ?? models[0] ?? null;
   const CATS = ["All", "Chat", "Code", "Image", "Search", "Foundation"];
   const [cat, setCat] = useState("All");
   const list = cat === "All" ? models : models.filter((m) => m.category === cat);
@@ -22,8 +22,9 @@ export function LearnAiHome() {
   const isSignedIn = Boolean(profile);
   const guestResume = defaultResume();
   const cardResume = isSignedIn ? RESUME : guestResume;
-  const cardProgress = isSignedIn
-    ? { mark: resumeModel.mark, done: resumeModel.done, total: resumeModel.total, pct: resumeModel.pct }
+  const progressSource = isSignedIn && resumeModel ? resumeModel : null;
+  const cardProgress = progressSource
+    ? { mark: progressSource.mark, done: progressSource.done, total: progressSource.total, pct: progressSource.pct }
     : { mark: guestResume.mark, done: 0, total: lessonTotal("chatgpt"), pct: 0 };
 
   const bodyWrapStyle = { maxWidth: 1320, margin: "0 auto", padding: "40px max(28px, 3vw) 0" } as const;
