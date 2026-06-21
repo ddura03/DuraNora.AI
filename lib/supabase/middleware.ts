@@ -1,14 +1,38 @@
 import { isAuthPage, isProtectedPath, safeRedirectPath } from "@/lib/auth/routes";
+import { getSupabasePublicEnv, SUPABASE_PUBLIC_ENV_ERROR } from "@/lib/supabase/env";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+function configErrorResponse(request: NextRequest, response: NextResponse) {
+  response.headers.set("X-DuraNoia-Config-Error", SUPABASE_PUBLIC_ENV_ERROR);
+  return response;
+}
+
+function redirectUnauthenticated(request: NextRequest, pathname: string) {
+  const url = request.nextUrl.clone();
+  url.pathname = "/signin";
+  url.searchParams.set("redirectTo", pathname);
+  return NextResponse.redirect(url);
+}
+
 export async function updateSession(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  const env = getSupabasePublicEnv();
+
+  if (!env) {
+    console.error(`[middleware] ${SUPABASE_PUBLIC_ENV_ERROR}`);
+
+    if (isProtectedPath(pathname)) {
+      return configErrorResponse(request, redirectUnauthenticated(request, pathname));
+    }
+
+    return configErrorResponse(request, NextResponse.next({ request }));
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
+  try {
+    const supabase = createServerClient(env.url, env.anonKey, {
       cookies: {
         getAll() {
           return request.cookies.getAll();
@@ -23,26 +47,29 @@ export async function updateSession(request: NextRequest) {
           });
         },
       },
-    },
-  );
+    });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  const pathname = request.nextUrl.pathname;
+    if (!user && isProtectedPath(pathname)) {
+      return redirectUnauthenticated(request, pathname);
+    }
 
-  if (!user && isProtectedPath(pathname)) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/signin";
-    url.searchParams.set("redirectTo", pathname);
-    return NextResponse.redirect(url);
+    if (user && isAuthPage(pathname)) {
+      const redirectTo = safeRedirectPath(request.nextUrl.searchParams.get("redirectTo"));
+      return NextResponse.redirect(new URL(redirectTo, request.url));
+    }
+
+    return supabaseResponse;
+  } catch (error) {
+    console.error("[middleware] Supabase session update failed:", error);
+
+    if (isProtectedPath(pathname)) {
+      return redirectUnauthenticated(request, pathname);
+    }
+
+    return NextResponse.next({ request });
   }
-
-  if (user && isAuthPage(pathname)) {
-    const redirectTo = safeRedirectPath(request.nextUrl.searchParams.get("redirectTo"));
-    return NextResponse.redirect(new URL(redirectTo, request.url));
-  }
-
-  return supabaseResponse;
 }
