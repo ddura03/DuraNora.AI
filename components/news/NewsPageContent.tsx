@@ -63,7 +63,7 @@ export function NewsPageContent() {
   const featuredImg = featured.company ? newsImage(featured.company) : null;
 
   return (
-    <div className="wf">
+    <div className="wf news-page">
       <div className="news-hero">
         <div className="super">
           <span className="live" />
@@ -113,7 +113,7 @@ export function NewsPageContent() {
             {list.length} stor{list.length === 1 ? "y" : "ies"}
           </span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 18 }}>
+        <div className="news-page-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 18 }}>
           {list.map((n) => (
             <NewsCard key={n.id} n={n} />
           ))}

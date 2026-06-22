@@ -20,7 +20,7 @@ export function HeaderNav() {
   const pathname = usePathname();
 
   return (
-    <div className="links" style={{ color: "var(--ink)", fontWeight: 600, gap: 38, fontSize: "13.5px" }}>
+    <div className="links header-nav-desktop" style={{ color: "var(--ink)", fontWeight: 600, gap: 38, fontSize: "13.5px" }}>
       {LINKS.map((l) => {
         const on = isActive(pathname, l.href);
         return (

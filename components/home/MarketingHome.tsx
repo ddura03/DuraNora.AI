@@ -99,14 +99,14 @@ function NewsSection() {
 
   return (
     <div className="sec" style={{ padding: "30px 22px 24px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 14 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 14 }} className="home-news-head">
         <div>
           <div className="kicker">Live feed</div>
           <div style={{ fontFamily: "var(--sans)", fontSize: 30, fontWeight: 700, letterSpacing: "-.01em", lineHeight: 1, marginTop: 4 }}>
             What&apos;s new from the labs
           </div>
         </div>
-        <div style={{ display: "flex", gap: 6, position: "relative" }}>
+        <div style={{ display: "flex", gap: 6, position: "relative" }} className="home-news-filters">
           {FILTERS.map((f) => (
             <button key={f} type="button" onClick={() => setActive(f)} className={"filter-pill" + (f === active ? " is-on" : "")} aria-pressed={f === active}>
               {f}
@@ -114,7 +114,7 @@ function NewsSection() {
           ))}
         </div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }} className="home-news-grid">
         {list.map((n, i) => (
           <div className="news-card" key={n.title}>
             <NewsImage kind={n.tag || ""} index={i} />
@@ -138,7 +138,7 @@ function FeatureSection() {
   const router = useRouter();
   return (
     <div className="sec" style={{ padding: "30px 22px 24px" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginTop: 8 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginTop: 8 }} className="home-feature-grid">
         <div className="feat-card" onClick={() => router.push("/learn")}>
           <div className="feat-title">
             Learn AI
@@ -202,7 +202,7 @@ export function MarketingHome() {
     <div className="wf" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
       <div className="home-hero-shell">
         <div className="wf-body" style={{ background: P.bg, flex: 1, display: "flex", flexDirection: "column" }}>
-          <div className="v2-hero" style={{ background: P.bgDeep, flex: 1, minHeight: 560, borderColor: P.line, position: "relative", overflow: "hidden" }}>
+          <div className="v2-hero home-hero" style={{ background: P.bgDeep, flex: 1, minHeight: 560, borderColor: P.line, position: "relative", overflow: "hidden" }}>
             <div
               style={{
                 position: "absolute",
@@ -221,7 +221,8 @@ export function MarketingHome() {
             <Crosshair t={20} r={20} color={P.accent2} />
             <Crosshair b={20} r={20} color={P.accent2} />
 
-            <div style={{ position: "absolute", left: "max(54px, calc(50% - 660px))", top: 88, width: 500 }}>
+            <div className="home-hero-layout">
+            <div className="home-hero-picker" style={{ position: "absolute", left: "max(54px, calc(50% - 660px))", top: 88, width: 500 }}>
               <div
                 ref={cardRef}
                 style={{
@@ -234,7 +235,7 @@ export function MarketingHome() {
                 }}
               >
                 <div style={{ marginBottom: 16, fontFamily: "var(--mono)", fontSize: 13.5, color: P.accent, letterSpacing: ".14em", fontWeight: 700 }}>◇ SELECT A MODEL</div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 11 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 11 }} className="home-model-picker-grid">
                   {AI_LIST.map((ai) => (
                     <button
                       key={ai.name}
@@ -268,19 +269,20 @@ export function MarketingHome() {
               </div>
             </div>
 
-            <div style={{ position: "absolute", right: "max(54px, calc(50% - 660px))", top: 88, maxWidth: 660, color: P.ink, textAlign: "right", height: cardH, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-              <div style={{ fontFamily: "var(--sans)", fontWeight: 800, fontSize: 70, letterSpacing: "-.028em", lineHeight: 1.02, color: P.accent2 }}>
+            <div className="home-hero-copy" style={{ position: "absolute", right: "max(54px, calc(50% - 660px))", top: 88, maxWidth: 660, color: P.ink, textAlign: "right", height: cardH, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div className="home-hero-headline" style={{ fontFamily: "var(--sans)", fontWeight: 800, fontSize: 70, letterSpacing: "-.028em", lineHeight: 1.02, color: P.accent2 }}>
                 <div style={{ color: P.accent2, fontStyle: "normal", fontWeight: 800 }}>The AI knows you.</div>
                 <div style={{ color: P.accent, fontStyle: "italic", fontWeight: 700 }}>Now know it back.</div>
               </div>
-              <div style={{ marginLeft: "auto", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 12 }}>
+              <div className="home-hero-subcopy" style={{ marginLeft: "auto", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 12 }}>
                 <div style={{ width: 72, height: 2, background: `linear-gradient(90deg, ${P.soft} 0%, ${P.accent} 100%)`, borderRadius: 2 }} />
-                <div style={{ fontFamily: "var(--sans)", fontSize: 22, fontWeight: 500, color: P.ink, lineHeight: 1.45, whiteSpace: "nowrap" }}>Hands-on lessons for the models shaping how we work.</div>
+                <div className="home-hero-tagline" style={{ fontFamily: "var(--sans)", fontSize: 22, fontWeight: 500, color: P.ink, lineHeight: 1.45, whiteSpace: "nowrap" }}>Hands-on lessons for the models shaping how we work.</div>
                 <div style={{ fontFamily: "var(--sans)", fontSize: 22, fontWeight: 600, color: P.accent, fontStyle: "italic", lineHeight: 1.4, display: "inline-flex", alignItems: "center", gap: 10 }}>
                   <span style={{ fontFamily: "var(--mono)", fontStyle: "normal", color: P.accent, fontWeight: 700 }}>←</span>
                   Pick one to begin.
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>

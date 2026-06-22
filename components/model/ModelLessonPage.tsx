@@ -88,14 +88,15 @@ export function ModelLessonPage({ modelSlug }: Props) {
       </div>
 
       <div className="model-lesson-workspace">
-        <div className="pane" style={{ borderRadius: 0, borderLeft: 0, borderTop: 0, borderBottom: 0, borderRight: "1px solid var(--line)" }}>
-          <div className="pane-head">
-            <span>// LESSONS</span>
-            <span>
-              {completed.size} / {LESSONS.length}
-            </span>
-          </div>
-          <div className="pane-body" style={{ padding: 0, gap: 0, overflowY: "auto" }}>
+        <div className="pane model-lesson-pane-lessons" style={{ borderRadius: 0, borderLeft: 0, borderTop: 0, borderBottom: 0, borderRight: "1px solid var(--line)" }}>
+          <details className="model-lesson-lessons-drawer" open>
+            <summary className="pane-head model-lesson-lessons-summary">
+              <span>// LESSONS</span>
+              <span>
+                {completed.size} / {LESSONS.length}
+              </span>
+            </summary>
+            <div className="pane-body" style={{ padding: 0, gap: 0, overflowY: "auto" }}>
             {LESSONS.map((L, i) => {
               const isOn = i === activeIdx;
               const isDone = completed.has(i);
@@ -147,10 +148,11 @@ export function ModelLessonPage({ modelSlug }: Props) {
                 </div>
               );
             })}
-          </div>
+            </div>
+          </details>
         </div>
 
-        <div className="pane model-lesson-center" style={{ borderRadius: 0, border: 0 }}>
+        <div className="pane model-lesson-center model-lesson-pane-video" style={{ borderRadius: 0, border: 0 }}>
           <div className="pane-head" style={{ background: "#fff" }}>
             <span>
               // LESSON {lesson.n} · {lesson.title.toUpperCase()}
@@ -173,7 +175,7 @@ export function ModelLessonPage({ modelSlug }: Props) {
           </div>
         </div>
 
-        <div className="pane" style={{ borderRadius: 0, borderRight: 0, borderTop: 0, borderBottom: 0, borderLeft: "1px solid var(--line)" }}>
+        <div className="pane model-lesson-pane-try" style={{ borderRadius: 0, borderRight: 0, borderTop: 0, borderBottom: 0, borderLeft: "1px solid var(--line)" }}>
           <div className="pane-head">
             <span>// TRY IT YOURSELF</span>
             <span style={{ color: "var(--violet-deep)" }}>● live</span>
