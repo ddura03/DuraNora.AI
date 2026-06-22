@@ -2846,6 +2846,147 @@ a{color:inherit}
   max-width: 100%;
 }
 
+/* Model lesson workspace — compact header (design-reference/model-page-v3.jsx) */
+.model-lesson-page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 73px);
+  min-height: 0;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.model-lesson-header {
+  flex-shrink: 0;
+  padding: 18px max(40px, 4vw);
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.model-lesson-header__row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.model-lesson-header__glyph {
+  width: 52px;
+  height: 52px;
+  border: 1.5px solid var(--violet-deep);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--paper-2);
+  flex-shrink: 0;
+}
+
+.model-lesson-header__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.model-lesson-header__title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.model-lesson-header__name {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.model-lesson-header__meta {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+
+.model-lesson-header__tagline {
+  font-size: 14px;
+  color: var(--ink-2);
+  margin-top: 2px;
+  line-height: 1.35;
+}
+
+.model-lesson-workspace {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 260px 1fr 340px;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.model-lesson-workspace > .pane {
+  min-height: 0;
+}
+
+.model-lesson-workspace .pane-head {
+  color: #1a1325;
+}
+
+.model-lesson-workspace .pane-head .lesson-nav {
+  color: var(--ink-2);
+}
+
+.model-lesson-workspace .pane-head .lesson-nav.next {
+  color: var(--violet-deep);
+}
+
+.model-lesson-center {
+  overflow: hidden;
+}
+
+.model-lesson-center__body {
+  padding: 16px 20px 18px;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.model-lesson-center__video {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+}
+
+.model-lesson-center__meta {
+  flex-shrink: 0;
+}
+
+.model-lesson-center__label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--violet-deep);
+  margin-bottom: 4px;
+}
+
+.model-lesson-center__desc {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .model-lesson-workspace {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+}
+
 /* Showcase — keep submit button inline in the heading row (auth wireframe sets .btn { width:100% }) */
 .sc-head .btn {
   width: auto;

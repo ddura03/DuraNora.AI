@@ -69,25 +69,25 @@ export function ModelLessonPage({ modelSlug }: Props) {
   }
 
   return (
-    <div className="wf">
-      <div className="sec" style={{ paddingTop: 18, paddingBottom: 18, borderBottom: "1px solid var(--line)", background: "var(--paper)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div className="id-glyph" style={{ width: 54, height: 54, fontSize: 24 }}>
-            <ModelLogo mark={MODEL.mark} />
+    <div className="wf model-lesson-page">
+      <div className="model-lesson-header">
+        <div className="model-lesson-header__row">
+          <div className="model-lesson-header__glyph">
+            <ModelLogo mark={MODEL.mark} size={52} />
           </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
-              <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-.01em" }}>{MODEL.name}</div>
-              <span className="label">
+          <div className="model-lesson-header__copy">
+            <div className="model-lesson-header__title-row">
+              <div className="model-lesson-header__name">{MODEL.name}</div>
+              <span className="model-lesson-header__meta">
                 {MODEL.by} · {MODEL.version}
               </span>
             </div>
-            <div style={{ fontSize: 14, color: "var(--ink-2)", marginTop: 2 }}>{MODEL.tagline}</div>
+            <div className="model-lesson-header__tagline">{MODEL.tagline}</div>
           </div>
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "260px 1fr 340px", height: "calc(100vh - 165px)", minHeight: 520, background: "var(--paper)", overflow: "hidden" }}>
+      <div className="model-lesson-workspace">
         <div className="pane" style={{ borderRadius: 0, borderLeft: 0, borderTop: 0, borderBottom: 0, borderRight: "1px solid var(--line)" }}>
           <div className="pane-head">
             <span>// LESSONS</span>
@@ -150,7 +150,7 @@ export function ModelLessonPage({ modelSlug }: Props) {
           </div>
         </div>
 
-        <div className="pane" style={{ borderRadius: 0, border: 0 }}>
+        <div className="pane model-lesson-center" style={{ borderRadius: 0, border: 0 }}>
           <div className="pane-head" style={{ background: "#fff" }}>
             <span>
               // LESSON {lesson.n} · {lesson.title.toUpperCase()}
@@ -164,23 +164,11 @@ export function ModelLessonPage({ modelSlug }: Props) {
               </span>
             </span>
           </div>
-          <div className="pane-body" style={{ padding: 20, overflowY: "auto" }}>
-            <div className="vid" style={{ height: 230 }}>
+          <div className="pane-body model-lesson-center__body">
+            <div className="vid model-lesson-center__video">
               <span className="tag">▶ NOW PLAYING · 0:00 / {lesson.dur}</span>
               <div className="play" />
               <span className="dur">{lesson.dur}</span>
-            </div>
-            <div style={{ marginTop: 18 }}>
-              <div className="label" style={{ color: "var(--violet-deep)", marginBottom: 6 }}>
-                {lesson.level} · Lesson {lesson.n}
-              </div>
-              <h2 style={{ fontSize: 22, marginTop: 0 }}>{lesson.desc}</h2>
-            </div>
-            <div className="box solid" style={{ padding: 14, marginTop: 18, background: "var(--paper-2)" }}>
-              <div className="label" style={{ color: "var(--violet-deep)" }}>
-                ▶ {lesson.callout.label}
-              </div>
-              <div style={{ marginTop: 8, fontSize: 14, color: "var(--ink)", lineHeight: 1.5 }}>{lesson.callout.text}</div>
             </div>
           </div>
         </div>
