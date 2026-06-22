@@ -253,7 +253,7 @@ export function MarketingHome() {
                         fontSize: 14,
                         textAlign: "left",
                       }}
-                      onClick={() => router.push(`/learn/${ai.name.toLowerCase()}/hub`)}
+                      onClick={() => router.push(`/learn/${ai.name.toLowerCase()}`)}
                     >
                       <span style={{ width: 38, height: 38, border: `1px solid ${P.line}`, borderRadius: 6, display: "grid", placeItems: "center", background: `${P.soft}33`, fontWeight: 700, fontSize: 16, color: P.accent2, flex: "0 0 38px" }}>
                         <ModelLogo mark={ai.mark} />
