@@ -3,7 +3,7 @@ import { PRIVACY_SECTIONS } from "@/lib/legal-content";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy · DuraNoia.AI",
+  title: "Privacy Policy",
   description: "Privacy Policy for DuraNoia.AI",
 };
 

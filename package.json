@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "generate-icons": "node scripts/generate-icons.mjs",
     "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
@@ -27,7 +28,9 @@
     "eslint": "^9.28.0",
     "eslint-config-next": "^15.3.3",
     "postcss": "^8.5.4",
+    "sharp": "^0.35.2",
     "tailwindcss": "^4.1.8",
+    "to-ico": "^1.1.5",
     "tsx": "^4.22.4",
     "typescript": "^5.8.3"
   }

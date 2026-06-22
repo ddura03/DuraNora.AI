@@ -3,7 +3,7 @@ import { TERMS_SECTIONS } from "@/lib/legal-content";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service · DuraNoia.AI",
+  title: "Terms of Service",
   description: "Terms of Service for DuraNoia.AI",
 };
 

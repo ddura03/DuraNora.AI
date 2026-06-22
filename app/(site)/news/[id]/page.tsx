@@ -12,9 +12,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const item = getNewsById(id);
-  if (!item) return { title: "Story not found · DuraNoia.AI" };
+  if (!item) return { title: "Story not found" };
   return {
-    title: `${item.title} · DuraNoia.AI`,
+    title: item.title,
     description: item.excerpt,
   };
 }

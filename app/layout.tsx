@@ -16,8 +16,16 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DuraNoia.AI — AI Education Platform",
-  description: "The AI knows you. Now know it back.",
+  title: "DuraNoia.AI",
+  description: "Hands-on lessons for the AI models shaping how we work.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico?v=2", sizes: "32x32" },
+      { url: "/icon.png?v=2", type: "image/png", sizes: "512x512" },
+    ],
+    apple: "/apple-icon.png?v=2",
+    shortcut: "/favicon.ico?v=2",
+  },
 };
 
 export const viewport: Viewport = {
