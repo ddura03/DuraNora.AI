@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AI_LIST } from "@/lib/ai-list";
-import { NEWS } from "@/lib/news";
+import { NEWS_ITEMS } from "@/lib/news";
+import { newsImage } from "@/lib/news-utils";
 import { Footer } from "@/components/Footer";
 import { ModelLogo } from "@/components/ModelLogo";
 import { NeuralBackground } from "@/components/NeuralBackground";
@@ -59,7 +60,7 @@ function SectionDivider() {
   );
 }
 
-function NewsImage({ kind, index }: { kind: string; index: number }) {
+function NewsImage({ company }: { company: string }) {
   const base: React.CSSProperties = {
     height: 110,
     border: "1px solid #d9cff0",
@@ -70,32 +71,22 @@ function NewsImage({ kind, index }: { kind: string; index: number }) {
     position: "relative",
     overflow: "hidden",
   };
-  const map: Record<string, string> = {
-    OpenAI: "/logos/news-openai.png",
-    Anthropic: "/logos/news-anthropic.png",
-    Google: "/logos/news-google.png",
-    xAI: "/logos/news-xai.png",
-    DeepSeek: "/logos/news-deepseek.png",
-    Perplexity: "/logos/news-perplexity.png",
-    Meta: "/logos/news-meta.png",
-    EU: "/logos/news-eu.png",
-    Anysphere: "/logos/news-cursor.png",
-    Midjourney: "/logos/news-midjourney.png",
-  };
-  if (map[kind]) {
+  const src = newsImage(company);
+  if (src) {
     return (
       <div style={base}>
-        <Image src={map[kind]} alt={kind} fill style={{ objectFit: "cover" }} unoptimized />
+        <Image src={src} alt={company} fill style={{ objectFit: "cover" }} unoptimized />
       </div>
     );
   }
-  return <div style={base}>IMG · 0{index + 1}</div>;
+  return <div style={base} />;
 }
 
 function NewsSection() {
   const FILTERS = ["All", "Releases", "Funding", "Research", "Policy"];
   const [active, setActive] = useState("All");
-  const list = active === "All" ? NEWS : NEWS.filter((n) => n.cat === active);
+  const homeNews = NEWS_ITEMS.filter((n) => n.id !== "cursor-agents" && n.id !== "mj-v8");
+  const list = active === "All" ? homeNews : homeNews.filter((n) => n.cat === active);
 
   return (
     <div className="sec" style={{ padding: "30px 22px 24px" }}>
@@ -115,11 +106,11 @@ function NewsSection() {
         </div>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }} className="home-news-grid">
-        {list.map((n, i) => (
-          <div className="news-card" key={n.title}>
-            <NewsImage kind={n.tag || ""} index={i} />
+        {list.map((n) => (
+          <Link href={`/news/${n.id}`} className="news-card" key={n.id}>
+            <NewsImage company={n.company || ""} />
             <div className="news-meta">
-              <b>{n.tag}</b>
+              <b>{n.company}</b>
               <span>{n.date}</span>
             </div>
             <div className="news-title">{n.title}</div>
@@ -127,7 +118,7 @@ function NewsSection() {
             <div className="read-link" style={{ marginTop: 4, fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: ".06em", fontWeight: 600 }}>
               READ <span className="arr">→</span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -336,6 +336,40 @@ html {
   }
 }
 
+/* ── News article detail ── */
+@media (max-width: 900px) {
+  .news-article-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .news-article-sidebar {
+    position: static !important;
+    order: 2;
+  }
+
+  .news-article-main {
+    order: 1;
+  }
+
+  .news-article-related-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .news-article-title {
+    font-size: 28px !important;
+  }
+
+  .news-article-hero {
+    height: 200px !important;
+  }
+
+  .news-article-related-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* ── Model lesson workspace ── */
 @media (max-width: 1024px) {
   .model-lesson-page {

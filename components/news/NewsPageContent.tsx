@@ -1,31 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { NEWS_CATS, NEWS_ITEMS } from "@/lib/news";
+import { newsImage } from "@/lib/news-utils";
 import type { NewsItem } from "@/lib/types";
 import { ModelLogo } from "@/components/ModelLogo";
-
-function newsImage(company: string) {
-  const map: Record<string, string> = {
-    OpenAI: "/logos/news-openai.png",
-    Anthropic: "/logos/news-anthropic.png",
-    Google: "/logos/news-google.png",
-    xAI: "/logos/news-xai.png",
-    DeepSeek: "/logos/news-deepseek.png",
-    Perplexity: "/logos/news-perplexity.png",
-    Meta: "/logos/news-meta.png",
-    Policy: "/logos/news-eu.png",
-    Cursor: "/logos/news-cursor.png",
-    Midjourney: "/logos/news-midjourney.png",
-  };
-  return map[company];
-}
 
 function NewsCard({ n }: { n: NewsItem }) {
   const img = n.company ? newsImage(n.company) : null;
   return (
-    <div className="ncard">
+    <Link href={`/news/${n.id}`} className="ncard">
       <div className="nimg">
         {img ? <Image src={img} alt={n.company || ""} fill style={{ objectFit: "cover" }} unoptimized /> : null}
         <div className="co">
@@ -51,7 +37,7 @@ function NewsCard({ n }: { n: NewsItem }) {
           <span style={{ color: "var(--muted)", fontWeight: 400, marginLeft: "auto" }}>{n.read}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -75,7 +61,7 @@ export function NewsPageContent() {
         <div className="sub">Model releases, funding, research, and policy — straight from the AI companies, summarized so you can keep up in five minutes.</div>
       </div>
       <div className="sec">
-        <div className="featured" style={{ marginBottom: 28 }}>
+        <Link href={`/news/${featured.id}`} className="featured" style={{ marginBottom: 28 }}>
           <div className="img">
             {featuredImg ? <Image src={featuredImg} alt="" fill style={{ objectFit: "cover" }} unoptimized /> : null}
             <span className="tag">★ FEATURED · {featured.cat.toUpperCase()}</span>
@@ -100,7 +86,7 @@ export function NewsPageContent() {
               Read the full story <span className="ar">→</span>
             </span>
           </div>
-        </div>
+        </Link>
         <div className="filters">
           <div className="chips">
             {NEWS_CATS.map((c) => (

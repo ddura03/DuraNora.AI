@@ -30,6 +30,13 @@ export type AiCatalogItem = {
   lessons: number;
 };
 
+export type NewsArticleBody = {
+  paragraphs: string[];
+  subheadings?: { after: number; text: string }[];
+  pullQuote?: string;
+  pullQuoteAfter?: number;
+};
+
 export type NewsItem = {
   id?: string;
   tag?: string;
@@ -41,6 +48,10 @@ export type NewsItem = {
   excerpt: string;
   read?: string;
   featured?: boolean;
+  sourceUrl?: string;
+  topics?: string[];
+  modelSlug?: string;
+  body?: NewsArticleBody;
 };
 
 export type Lesson = {
